@@ -3,6 +3,9 @@
 // Updated prices matching official Bukit Indah menu.pdf
 
 const MENU_ITEMS = [
+    // --------------------------------------------------------
+    // SET MENU
+    // --------------------------------------------------------
     {
         id: "set-1",
         category: "set",
@@ -93,6 +96,10 @@ const MENU_ITEMS = [
         serving: "Shareable",
         spicy: 2
     },
+
+    // --------------------------------------------------------
+    // BEEF BBQ
+    // --------------------------------------------------------
     {
         id: "beef-7",
         category: "beef",
@@ -177,7 +184,7 @@ const MENU_ITEMS = [
         price: "RM 125.00",
         descKo: "뼈째 직각 방향으로 잘라 대파와 마늘을 넣은 특제 간장 양념에 재운 소갈비구이",
         descEn: "Short ribs cut through the bone and marinated in soy sauce, onion, and garlic",
-        descZh: "LA排骨是将整条排骨切成与骨头呈直角方向，形成连骨带肉的T骨牛排，主要可做烧烤或炖排骨。",
+        descZh: "LA排骨是将整条排骨切成与骨头呈直角方向，形成连骨带肉 of T骨牛排，主要可做烧烤或炖排骨。",
         image: "assets/menu/la_galbi.jpg",
         badge: "",
         serving: "200g",
@@ -213,6 +220,10 @@ const MENU_ITEMS = [
         serving: "200g",
         spicy: 0
     },
+
+    // --------------------------------------------------------
+    // PORK BBQ
+    // --------------------------------------------------------
     {
         id: "pork-15",
         category: "pork",
@@ -363,6 +374,10 @@ const MENU_ITEMS = [
         serving: "200g",
         spicy: 0
     },
+
+    // --------------------------------------------------------
+    // OTHER BBQ
+    // --------------------------------------------------------
     {
         id: "other-bbq-25",
         category: "other-bbq",
@@ -439,6 +454,25 @@ const MENU_ITEMS = [
         spicy: 3
     },
     {
+        id: "other-bbq-29-b",
+        category: "other-bbq",
+        nameKo: "M06. 장어구이",
+        nameEn: "Jangeo Gui (Salt / Soy Sauce)",
+        nameZh: "烤鳗鱼",
+        price: "1pc RM 125 / 2pcs RM 235",
+        descKo: "소금구이 또는 간장 양념구이로 선택 가능한 신선한 보양 민물장어 구이",
+        descEn: "Grilled freshwater eel served with choice of salt or soy sauce glaze.",
+        descZh: "新鲜淡水烤鳗鱼，可选盐烤或酱油烤，富含多种营养，是大补之品",
+        image: "assets/menu/jangeo_gui.jpg",
+        badge: "",
+        serving: "1-2 Pax",
+        spicy: 0
+    },
+
+    // --------------------------------------------------------
+    // STEWS
+    // --------------------------------------------------------
+    {
         id: "stew-30",
         category: "stew",
         nameKo: "S01. 김치찌개",
@@ -514,6 +548,36 @@ const MENU_ITEMS = [
         spicy: 0
     },
     {
+        id: "stew-34-b",
+        category: "stew",
+        nameKo: "S06. 소불고기",
+        nameEn: "So Bulgogi",
+        nameZh: "砂锅牛肉",
+        price: "RM 45.00",
+        descKo: "달콤한 특제 간장 양념에 버무린 소고기 불고기와 당면, 야채를 자작하게 끓여낸 찌개",
+        descEn: "Thinly sliced beef marinated in sweet soy sauce with glass noodles and vegetables.",
+        descZh: "在甜沙参酱汁中腌制的切片牛肉，配以粉条和各种蔬菜同煮",
+        image: "assets/menu/so_bulgogi.jpg",
+        badge: "",
+        serving: "1 Pax",
+        spicy: 0
+    },
+    {
+        id: "stew-34-c",
+        category: "stew",
+        nameKo: "S07. 돼지불고기",
+        nameEn: "Dwaeji Bulgogi",
+        nameZh: "砂锅猪肉",
+        price: "RM 40.00",
+        descKo: "특제 양념에 재운 부드러운 돼지불고기와 신선한 버섯, 당면, 야채를 버무린 찌개",
+        descEn: "Tender pork marinated in sweet soy sauce with mushrooms and vegetables.",
+        descZh: "腌制好的软嫩猪肉与新鲜蘑菇、粉条和蔬菜同煮，汤汁极佳",
+        image: "assets/menu/dwaeji_bulgogi.jpg",
+        badge: "",
+        serving: "1 Pax",
+        spicy: 0
+    },
+    {
         id: "stew-35",
         category: "stew",
         nameKo: "S08. 갈비탕",
@@ -558,111 +622,134 @@ const MENU_ITEMS = [
         serving: "1 Pax",
         spicy: 2
     },
+
+    // --------------------------------------------------------
+    // HOT POTS
+    // --------------------------------------------------------
     {
-        id: "hotpot-38",
+        id: "hotpot-j01",
         category: "hotpot",
-        nameKo: "S03. 순두부찌개",
-        nameEn: "Sundubu Jjigae",
-        nameZh: "猪肉嫩豆腐锅",
-        price: "RM 28.00",
-        descKo: "몽글몽글한 순두부와 다진 돼지고기, 신선한 야채를 넣고 얼큰한 고추기름 육수로 맛을 낸 찌개 (날달걀 추가 가능)",
-        descEn: "Soft bean curd stew boiled with minced pork and vegetables in a spicy red chili broth.",
-        descZh: "在砂锅中放入嫩豆腐和猪肉、蔬菜，再加入辣高汤, 顶上面打入新鲜鸡蛋",
-        image: "assets/menu/sundubu_jjigae.jpg",
+        nameKo: "J01. 김치전골",
+        nameEn: "Kimchi Jeongol",
+        nameZh: "泡菜火锅",
+        price: "S: RM 80 / L: RM 95",
+        descKo: "신선한 돼지고기, 두부, 가래떡, 라면사리 등을 넣어 여럿이서 푸짐하게 즐기는 매콤한 김치전골",
+        descEn: "Spicy hot pot with kimchi, pork, tofu, rice cake, and ramen noodles.",
+        descZh: "放入泡菜、猪肉、豆腐、年糕和拉面同煮的经典韩式泡菜火锅",
+        image: "assets/menu/kimchi_jeongol.jpg",
         badge: "",
-        serving: "1 Pax",
+        serving: "2-4 Pax",
         spicy: 1
     },
     {
-        id: "hotpot-39",
+        id: "hotpot-j02",
         category: "hotpot",
-        nameKo: "S01. 김치찌개",
-        nameEn: "Kimchi Jjigae",
-        nameZh: "猪肉泡菜汤",
-        price: "RM 28.00",
-        descKo: "푹 익은 신김치에 부드러운 돼지고기, 고소한 두부, 대파를 듬뿍 넣어 얼큰하고 깊은 맛을 낸 한국인의 소울푸드",
-        descEn: "Over-fermented kimchi boiled with pork, bean curd, and green onion. Often considered Korean soul food.",
-        descZh: "将酸泡菜放入锅中，再加入猪肉、豆腐以及切成粗丝의葱等材料炖煮即可。",
-        image: "assets/menu/kimchi_jjigae.jpg",
+        nameKo: "J02. 부대전골",
+        nameEn: "Budae Jeongol",
+        nameZh: "部队火锅",
+        price: "RM 95.00",
+        descKo: "햄, 소시지, 베이크드 빈스, 라면사리 등을 듬뿍 넣어 얼큰하고 진한 육수의 의정부식 부대전골",
+        descEn: "Spicy sausage and ham hot pot with baked beans, vegetables, and ramen noodles.",
+        descZh: "放入多种香肠、火腿、芝士、洋葱和拉面同煮的香辣韩式部队火锅",
+        image: "assets/menu/budae_jeongol.jpg",
         badge: "",
-        serving: "1 Pax",
+        serving: "2-3 Pax",
         spicy: 1
     },
     {
-        id: "hotpot-40",
+        id: "hotpot-j03",
         category: "hotpot",
-        nameKo: "S02. 된장찌개",
-        nameEn: "Doenjang Jjigae",
-        nameZh: "海鲜大酱汤",
-        price: "RM 30.00",
-        descKo: "멸치 육수에 구수한 재래식 된장을 풀고 신선한 조개류, 두부, 애호박을 넣어 끓인 밥도둑 찌개",
-        descEn: "Doenjang-seasoned stew made with anchovy broth, fish or clams, and summer squash.",
-        descZh: "高汤中放入大酱，再加入肉、鱼贝类、豆腐、西葫芦等熬煮即可。",
-        image: "assets/menu/doenjang_jjigae.jpg",
+        nameKo: "J03. 불낙전골",
+        nameEn: "Bulnak Jeongol",
+        nameZh: "牛肉章鱼火锅",
+        price: "RM 100.00",
+        descKo: "부드러운 소고기와 쫄깃한 낙지, 신선한 야채가 조화를 이루는 영양 만점의 매콤한 불낙전골",
+        descEn: "Spicy and nourishing combination of beef, small octopus, and fresh mushrooms.",
+        descZh: "牛肉与整只章鱼同煮的经典高能海陆双拼辣味火锅，营养丰富",
+        image: "assets/menu/bulnak_jeongol.jpg",
+        badge: "",
+        serving: "2-3 Pax",
+        spicy: 1
+    },
+    {
+        id: "hotpot-j04",
+        category: "hotpot",
+        nameKo: "J04. 김치찜",
+        nameEn: "Kimchi Jjim",
+        nameZh: "泡菜炖猪肉",
+        price: "RM 130.00",
+        descKo: "묵은지와 도톰한 돼지 삼겹살, 갈비를 가마솥에 장시간 푹 쪄내어 입에서 녹는 전통 김치찜",
+        descEn: "Slow cooked aged kimchi stew with tender pork belly and ribs (30 min cooking time).",
+        descZh: "酸爽的老熟泡菜与厚切猪五花肉和排骨慢火炖制，猪肉入口即化",
+        image: "assets/menu/kimchi_jjim.jpg",
+        badge: "",
+        serving: "2-3 Pax",
+        spicy: 1
+    },
+    {
+        id: "hotpot-j05",
+        category: "hotpot",
+        nameKo: "J05. 버섯불고기전골",
+        nameEn: "Beoseot Bulgogi Jeongol",
+        nameZh: "蘑菇牛肉火锅",
+        price: "RM 98.00",
+        descKo: "다양한 종류의 신선한 버섯과 달콤한 소불고기, 당면을 맑은 육수에 보글보글 끓인 담백한 전골",
+        descEn: "Sweet soy sauce-based beef stew cooked with assorted fresh mushrooms and glass noodles.",
+        descZh: "各种新鲜蘑菇与韩式烤牛肉、粉条一起在清汤中熬煮，味道鲜甜清淡",
+        image: "assets/menu/beoseot_bulgogi_jeongol.jpg",
+        badge: "",
+        serving: "2-3 Pax",
+        spicy: 0
+    },
+    {
+        id: "hotpot-j06",
+        category: "hotpot",
+        nameKo: "J06. 돼지불고기전골",
+        nameEn: "Dwaeji Bulgogi Jeongol",
+        nameZh: "猪肉火锅",
+        price: "RM 80.00",
+        descKo: "부드러운 돼지 주물럭과 야채, 당면을 달콤한 특제 육수에 넣어 깔끔하게 끓인 전골 요리",
+        descEn: "Sweet soy sauce-based pork stew cooked with vegetables and glass noodles.",
+        descZh: "调味猪肉与新鲜蘑菇、粉条和各类蔬菜在清汤中熬煮的温润火锅",
+        image: "assets/menu/dwaeji_bulgogi_jeongol.jpg",
+        badge: "",
+        serving: "2-3 Pax",
+        spicy: 0
+    },
+    {
+        id: "hotpot-j07",
+        category: "hotpot",
+        nameKo: "J07. 갈비찜",
+        nameEn: "Galbi Jjim",
+        nameZh: "炖排骨",
+        price: "RM 90.00",
+        descKo: "소갈비를 간장 소스에 밤, 은행, 대추, 무 등과 함께 달콤하게 조려낸 명절 대표 요리 갈비찜",
+        descEn: "Braised beef short ribs simmered in a sweet soy sauce with chestnuts and dates.",
+        descZh: "精选牛排骨与栗子、大枣等配料在甜酱油汁中慢火炖制的韩式招牌炖牛排",
+        image: "assets/menu/galbi_jjim.jpg",
+        badge: "",
+        serving: "2-3 Pax",
+        spicy: 0
+    },
+    {
+        id: "hotpot-j08",
+        category: "hotpot",
+        nameKo: "J08. 삼계탕",
+        nameEn: "Samgyetang",
+        nameZh: "参鸡汤",
+        price: "RM 50.00",
+        descKo: "어린 닭의 뱃속에 인삼, 찹쌀, 마늘, 대추를 넣고 푹 끓여낸 여름철 최고의 전통 보양 약선탕",
+        descEn: "Whole spring chicken stuffed with Korean ginseng, dates, garlic, and sticky rice.",
+        descZh: "整只童子鸡内部填满高丽参、糯米、大蒜和大枣慢火熬制的传统韩国第一补汤",
+        image: "assets/menu/samgyetang.jpg",
         badge: "",
         serving: "1 Pax",
         spicy: 0
     },
-    {
-        id: "hotpot-41",
-        category: "hotpot",
-        nameKo: "S05. 보스된장찌개",
-        nameEn: "Boss Doenjang Jjigae",
-        nameZh: "牛肉大酱汤",
-        price: "RM 30.00",
-        descKo: "진하게 끓인 전통 한식 된장 육수에 부드러운 차돌박이 소고기, 두부, 야채를 아낌없이 넣은 프리미엄 된장찌개",
-        descEn: "Tofu and fresh vegetables in a rich traditional Korean bean broth topped with beef, served with rice.",
-        descZh: "在传统的韩式浓郁大酱汤中加入牛肉、豆腐 and 新鲜蔬菜熬制的大酱汤",
-        image: "assets/menu/boss_doenjang_jjigae.jpg",
-        badge: "",
-        serving: "1 Pax",
-        spicy: 0
-    },
-    {
-        id: "hotpot-42",
-        category: "hotpot",
-        nameKo: "S08. 갈비탕",
-        nameEn: "Galbitang",
-        nameZh: "牛排骨汤",
-        price: "RM 40.00",
-        descKo: "핏물을 뺀 소갈비와 큼직한 무를 가마솥에서 푹 고아 맑고 시원한 육수가 일품인 대표 보양식 갈비탕",
-        descEn: "Beef ribs and white radish chunks simmered together until tender. The clear stock is rich and savory.",
-        descZh: "用牛排骨熬的汤，牛排骨浸泡去血后与萝卜一起熬煮至肉烂，不但汤汁香醇",
-        image: "assets/menu/galbi_tang.jpg",
-        badge: "",
-        serving: "1 Pax",
-        spicy: 0
-    },
-    {
-        id: "hotpot-43",
-        category: "hotpot",
-        nameKo: "S09. 우거지갈비탕",
-        nameEn: "Ugeoji Galbitang",
-        nameZh: "干白菜排骨汤",
-        price: "RM 40.00",
-        descKo: "소갈비를 끓여낸 육수에 구수한 시골 된장과 식이섬유가 풍부한 우거지를 푹 끓여내어 위장에 좋은 건강 탕",
-        descEn: "Napa cabbage leaves slowly simmered in a beef rib stock and seasoned with traditional doenjang (soybean paste).",
-        descZh: "用排骨长时间熬煮制成高汤，再放入泡发的干白菜和大酱熬煮。",
-        image: "assets/menu/ugeoji_galbi_tang.jpg",
-        badge: "",
-        serving: "1 Pax",
-        spicy: 0
-    },
-    {
-        id: "hotpot-44",
-        category: "hotpot",
-        nameKo: "S10. 육개장",
-        nameEn: "Yukgaejang",
-        nameZh: "香辣牛肉汤",
-        price: "RM 38.00",
-        descKo: "소 양지머리를 고아 고사리, 대파, 토란대 등의 나물을 넣고 붉은 고추기름으로 맵고 얼큰하게 양념한 보양식",
-        descEn: "A spicy soup made of shredded beef brisket, radish, green onions, bean sprouts, and fiddleheads.",
-        descZh: "用牛的排骨 and 萝卜等长时间熬煮，再加入大葱、青芋茎、蕨菜 and 辣椒粉等调味而成。",
-        image: "assets/menu/yukgaejang.jpg",
-        badge: "",
-        serving: "1 Pax",
-        spicy: 2
-    },
+
+    // --------------------------------------------------------
+    // RICE DISHES
+    // --------------------------------------------------------
     {
         id: "rice-45",
         category: "rice",
@@ -702,7 +789,7 @@ const MENU_ITEMS = [
         price: "RM 26.00",
         descKo: "매콤달콤한 고추장 돼지불고기 소스로 밥과 야채를 맛있게 불 맛나게 볶아낸 볶음밥",
         descEn: "Stir-fried rice with sweet and spicy pork bulgogi and assorted vegetables.",
-        descZh: "韩式辣炒猪肉与米饭及鲜疏一起炒制的高感度猪肉炒饭",
+        descZh: "韩式辣炒猪肉与米饭及铁板一起炒制的高感度猪肉炒饭",
         image: "assets/menu/dwaeji_bulgogi_bokkeumbap.jpg",
         badge: "",
         serving: "1 Pax",
@@ -764,6 +851,40 @@ const MENU_ITEMS = [
         descEn: "Freshly steamed white sticky rice bowl.",
         descZh: "白米饭",
         image: "assets/menu/bap.jpg",
+        badge: "",
+        serving: "1 Pax",
+        spicy: 0
+    },
+
+    // --------------------------------------------------------
+    // NOODLES
+    // --------------------------------------------------------
+    {
+        id: "noodle-n01",
+        category: "noodle",
+        nameKo: "N01. 매운야채비빔국수",
+        nameEn: "Maeun Yachae Bibim Guksu",
+        nameZh: "辣味蔬菜拌面",
+        price: "RM 28.00",
+        descKo: "탄력 있는 소면에 신선한 야채와 대파, 그리고 특제 고추장 매운 소스를 얹어 새콤달콤하게 비빈 별미 국수",
+        descEn: "Chilled noodles mixed with fresh crisp vegetables in an extremely spicy red pepper sauce.",
+        descZh: "冰爽的小麦细面配以新鲜脆嫩蔬菜，并淋上特制极辣辣酱，爽口开胃",
+        image: "assets/menu/maeun_yachae_bibimguksu.jpg",
+        badge: "",
+        serving: "1 Pax",
+        spicy: 3
+    },
+    {
+        id: "noodle-n02",
+        category: "noodle",
+        nameKo: "N02. 짜장면",
+        nameEn: "Jajangmyeon",
+        nameZh: "炸酱面",
+        price: "RM 28.00",
+        descKo: "춘장을 기름에 볶아 돼지고기와 감자, 양파 등의 채소를 듬뿍 넣고 전분물로 걸쭉하게 소스를 얹어 비벼 먹는 면 요리",
+        descEn: "Noodles topped with a thick, rich sauce made of chunjang (black bean paste), diced pork, and vegetables.",
+        descZh: "劲道的面条淋上由黑豆酱（春酱）、猪肉碎和洋葱丁炒制的浓郁黑色炸酱的韩式中华炸酱面",
+        image: "assets/menu/jajangmyeon.jpg",
         badge: "",
         serving: "1 Pax",
         spicy: 0
@@ -858,110 +979,193 @@ const MENU_ITEMS = [
         serving: "1 Pax",
         spicy: 1
     },
+
+    // --------------------------------------------------------
+    // OTHER CUISINE (ACTUAL SIDE DISHES FROM PDF)
+    // --------------------------------------------------------
     {
-        id: "other-cuisine-58",
+        id: "side-c01",
         category: "other-cuisine",
-        nameKo: "R01. 돌솥비빔밥",
-        nameEn: "Dolsot Bibimbap",
-        nameZh: "石锅拌饭",
-        price: "RM 30.00",
-        descKo: "뜨거운 돌솥에 밥과 신선한 오색 나물, 볶은 소고기, 계란 노른자를 올려 고추장에 비벼 먹는 한식 대표 비빔밥",
-        descEn: "Bibimbap served in a sizzling hot stone pot. The crispy rice at the bottom, mixed with various toppings and gochujang.",
-        descZh: "在加热의石锅中分别放入米饭、各种素菜 and 炒肉丝，用辣椒酱 or 酱油搅拌即可。",
-        image: "assets/menu/dolsot_bibimbap.jpg",
+        nameKo: "C01. 찜닭",
+        nameEn: "Jjimdak",
+        nameZh: "安东炖鸡",
+        price: "RM 80.00",
+        descKo: "닭고기와 감자, 당면을 매콤하고 짭조름한 간장 양념에 졸여 만든 경상북도 안동의 향토 요리",
+        descEn: "Simmered chicken with potatoes and glass noodles in a savory, slightly spicy soy sauce.",
+        descZh: "鸡肉块、土豆、胡萝卜和粉条在浓郁的甜辣酱油汁中炖制的韩式传统安东炖鸡",
+        image: "assets/menu/jjimdak.jpg",
         badge: "",
-        serving: "1 Pax",
-        spicy: 0
-    },
-    {
-        id: "other-cuisine-59",
-        category: "other-cuisine",
-        nameKo: "R03. 소불고기볶음밥",
-        nameEn: "Beef Bulgogi Bokkeumbap",
-        nameZh: "牛肉烤肉炒饭",
-        price: "RM 26.00",
-        descKo: "부드럽고 짭조름한 소불고기와 야채를 밥과 함께 철판에서 고소하게 볶아낸 소불고기 볶음밥",
-        descEn: "Stir-fried rice with tender, savory beef bulgogi and fresh vegetables.",
-        descZh: "香浓烤牛肉与大米饭和蔬菜在铁板上炒制的美味烤肉炒饭",
-        image: "assets/menu/beep_bulgogi_bokkeumbap.jpg",
-        badge: "",
-        serving: "1 Pax",
-        spicy: 0
-    },
-    {
-        id: "other-cuisine-60",
-        category: "other-cuisine",
-        nameKo: "R04. 돼지불고기볶음밥",
-        nameEn: "Dwaeji Bulgogi Bokkeumbap",
-        nameZh: "辣炒猪肉炒饭",
-        price: "RM 26.00",
-        descKo: "매콤달콤한 고추장 돼지불고기 소스로 밥과 야채를 맛있게 불 맛나게 볶아낸 볶음밥",
-        descEn: "Stir-fried rice with sweet and spicy pork bulgogi and assorted vegetables.",
-        descZh: "韩式辣炒猪肉与米饭及鲜疏一起炒制的高感度猪肉炒饭",
-        image: "assets/menu/dwaeji_bulgogi_bokkeumbap.jpg",
-        badge: "",
-        serving: "1 Pax",
+        serving: "2-3 Pax",
         spicy: 1
     },
     {
-        id: "other-cuisine-61",
+        id: "side-c02",
         category: "other-cuisine",
-        nameKo: "R05. 김치볶음밥",
-        nameEn: "Kimchi Bokkeumbap",
-        nameZh: "泡菜炒饭",
-        price: "RM 26.00",
-        descKo: "신김치와 베이컨 또는 고기를 볶은 뒤 참기름을 두른 볶음밥 위에 바삭한 계란후라이를 얹은 요리",
-        descEn: "Kimchi fried rice with meat, topped with a fried egg and seaweed flakes.",
-        descZh: "泡菜和米饭炒制，并配以煎蛋的泡菜炒饭",
-        image: "assets/menu/kimchi_bokkeumbap.jpg",
+        nameKo: "C02. 오삼불고기",
+        nameEn: "Osam Bulgogi",
+        nameZh: "鱿鱼炒猪肉",
+        price: "RM 90.00",
+        descKo: "쫄깃한 오징어와 고소한 돼지 삼겹살을 매콤한 고추장 양념에 볶아낸 최고의 콤비네이션 요리",
+        descEn: "Stir-fried pork belly and squid marinated in a spicy Korean chili paste.",
+        descZh: "Q弹鱿鱼与香浓五花肉在韩式辣椒酱中同炒的经典鱿鱼五花肉双拼",
+        image: "assets/menu/osam_bulgogi.jpg",
         badge: "",
-        serving: "1 Pax",
+        serving: "2-3 Pax",
+        spicy: 2
+    },
+    {
+        id: "side-c03",
+        category: "other-cuisine",
+        nameKo: "C03. 낙지볶음",
+        nameEn: "Nakji Bokkeum",
+        nameZh: "辣炒章鱼",
+        price: "RM 68.00",
+        descKo: "피로 회복에 좋은 신선한 낙지를 매콤한 고추장 양념에 센 불로 불맛 나게 볶아낸 별미 요리",
+        descEn: "Small octopus stir-fried in a fiery, spicy Korean chili sauce with vegetables.",
+        descZh: "新鲜的小章鱼配以洋葱在极辣的韩式辣酱中猛火爆炒，口感脆嫩鲜辣",
+        image: "assets/menu/nakji_bokkeum.jpg",
+        badge: "",
+        serving: "2-3 Pax",
+        spicy: 3
+    },
+    {
+        id: "side-c04",
+        category: "other-cuisine",
+        nameKo: "C04. 오징어소면",
+        nameEn: "Ojingeo Somyeon",
+        nameZh: "辣炒鱿鱼配素面",
+        price: "RM 68.00",
+        descKo: "매콤하게 볶아낸 오징어볶음에 잘 삶아진 소면을 비벼 먹는 안주로도 훌륭한 요리",
+        descEn: "Stir-fried squid in a spicy Korean chili sauce served with boiled wheat noodles.",
+        descZh: "香辣可口的辣炒鱿鱼配以水煮小麦细面，是极佳的下酒菜和下饭菜",
+        image: "assets/menu/ojingeo_somyeon.jpg",
+        badge: "",
+        serving: "2-3 Pax",
+        spicy: 2
+    },
+    {
+        id: "side-c05",
+        category: "other-cuisine",
+        nameKo: "C05. 제육볶음",
+        nameEn: "Jeyuk Bokkeum",
+        nameZh: "辣炒猪肉",
+        price: "RM 60.00",
+        descKo: "도톰한 돼지 앞다리살 또는 오겹살을 대파, 양파와 함께 매콤한 특제 고추장 소스에 철판에서 볶아낸 요리",
+        descEn: "Stir-fried sliced pork belly and vegetables in a spicy Korean chili paste.",
+        descZh: "切片五花肉与新鲜蔬菜在韩式辣椒酱中铁板翻炒而成的辣炒猪肉",
+        image: "assets/menu/jeyuk_bokkeum.jpg",
+        badge: "",
+        serving: "2-3 Pax",
+        spicy: 2
+    },
+    {
+        id: "side-c06",
+        category: "other-cuisine",
+        nameKo: "C06. 김치전",
+        nameEn: "Kimchi Jeon",
+        nameZh: "泡菜煎饼",
+        price: "RM 35.00",
+        descKo: "잘 익은 신김치를 송송 썰어 밀가루 반죽에 섞어 기름을 두르고 노릇하고 바삭하게 구워낸 전",
+        descEn: "Savory pancake made with finely chopped sour kimchi and vegetables, pan-fried to crispy perfection.",
+        descZh: "将酸熟泡菜切碎拌入面糊中，在煎锅中煎至金黄酥脆的经典韩国泡菜饼",
+        image: "assets/menu/kimchi_jeon.jpg",
+        badge: "",
+        serving: "1-2 Pax",
         spicy: 1
     },
     {
-        id: "other-cuisine-62",
+        id: "side-c07",
         category: "other-cuisine",
-        nameKo: "R06. 잡채볶음밥",
-        nameEn: "Japchae Bokkeumbap",
-        nameZh: "杂菜炒饭",
-        price: "RM 26.00",
-        descKo: "한식 잔치 요리인 당면 잡채와 밥을 함께 센 불에 볶아낸 쫄깃하고 고소한 잡채 볶음밥",
-        descEn: "Korean glass noodle (Japchae) and rice pan fried with assorted seasoned vegetables.",
-        descZh: "韩式杂菜（红薯淀粉粉丝）与各类调味蔬菜和米饭同炒的杂菜炒饭",
-        image: "assets/menu/japchae_bokkeumbap.png",
+        nameKo: "C07. 해물파전",
+        nameEn: "Haemul Pajeon",
+        nameZh: "海鲜葱饼",
+        price: "RM 45.00",
+        descKo: "향긋한 쪽파와 오징어, 새우, 조개 등 모듬 해물을 아낌없이 넣어 두툼하고 고소하게 지진 해물전",
+        descEn: "Savory Korean pancake packed with green onions and assorted seafood, pan-fried.",
+        descZh: "加入大量香葱和鱿鱼、虾仁等海鲜面糊煎制的厚实香浓海鲜葱饼",
+        image: "assets/menu/haemul_pajeon.jpg",
         badge: "",
-        serving: "1 Pax",
+        serving: "2-3 Pax",
         spicy: 0
     },
     {
-        id: "other-cuisine-63",
+        id: "side-c08",
         category: "other-cuisine",
-        nameKo: "R07. 주먹밥",
-        nameEn: "Jumeokbap",
-        nameZh: "手抓饭团",
-        price: "RM 20.00",
-        descKo: "따뜻한 밥에 고소한 참기름, 통깨, 조미 김가루를 조물조물 버무려 한 입 크기로 동글동글하게 뭉친 주먹밥",
-        descEn: "Hand-rolled rice balls seasoned with fragrant sesame oil, sesame seeds, and seaweed flakes.",
-        descZh: "拌入海苔碎和蔬菜手工捏成的圆形饭团",
-        image: "assets/menu/jumeokbap.jpg",
+        nameKo: "C08. 부추전",
+        nameEn: "Buchu Jeon",
+        nameZh: "韭菜煎饼",
+        price: "RM 35.00",
+        descKo: "몸에 좋은 신선한 영양 부추를 가득 썰어 반죽해 고소하고 얇게 구워낸 바삭한 부추전",
+        descEn: "Crispy, savory pancake made with fresh green chives and chili peppers.",
+        descZh: "加入新鲜健康韭菜糊煎制的薄脆韭菜饼",
+        image: "assets/menu/buchu_jeon.jpg",
         badge: "",
         serving: "1-2 Pax",
         spicy: 0
     },
     {
-        id: "other-cuisine-64",
+        id: "side-c09",
         category: "other-cuisine",
-        nameKo: "R08. 공기밥",
-        nameEn: "Bap",
-        nameZh: "白米饭",
-        price: "RM 6.00",
-        descKo: "매장에서 매일 신선하게 지은 고슬고슬하고 찰진 흰 쌀밥 공기밥",
-        descEn: "Freshly steamed white sticky rice bowl.",
-        descZh: "白米饭",
-        image: "assets/menu/bap.jpg",
+        nameKo: "C09. 떡볶이",
+        nameEn: "Tteokbokki",
+        nameZh: "辣炒年糕",
+        price: "RM 38.00",
+        descKo: "말랑한 쌀떡과 사각 어묵, 양배추를 매콤달콤한 고추장 베이스 소스에 조려낸 한국 대표 길거리 음식",
+        descEn: "Chewy rice cakes and fish cakes simmered in a sweet and spicy red chili sauce.",
+        descZh: "软糯年糕条与鱼饼、卷心菜一起在特制甜辣酱中熬煮的韩国第一街头小吃",
+        image: "assets/menu/tteokbokki.jpg",
+        badge: "",
+        serving: "1-2 Pax",
+        spicy: 1
+    },
+    {
+        id: "side-c10",
+        category: "other-cuisine",
+        nameKo: "C10. 잡채",
+        nameEn: "Japchae",
+        nameZh: "韩式杂菜",
+        price: "RM 40.00",
+        descKo: "삶은 당면에 시금치, 당근, 버섯, 양파, 소고기 등의 오색 고명을 얹고 참기름과 간장 양념으로 버무린 요리",
+        descEn: "Korean sweet potato glass noodles stir-fried with colorful vegetables, mushrooms, and beef.",
+        descZh: "红薯淀粉粉丝与菠菜、胡萝卜、蘑菇和牛肉丝一起淋上香油和酱油翻炒的杂菜",
+        image: "assets/menu/japchae.jpg",
+        badge: "",
+        serving: "1-2 Pax",
+        spicy: 0
+    },
+    {
+        id: "side-c11",
+        category: "other-cuisine",
+        nameKo: "C11. 보쌈",
+        nameEn: "Bossam",
+        nameZh: "白切肉",
+        price: "RM 65.00",
+        descKo: "돼지 오겹살을 한방 재료와 삶아내어 매콤한 보쌈김치, 무속과 함께 상추에 싸 먹는 수육 요리",
+        descEn: "Tender, simmered pork belly sliced and served with spicy radish salad and salted cabbage leaves.",
+        descZh: "选用优质猪五花肉配以韩方药材煮熟切片，配以秘制萝卜泡菜包食的白切肉",
+        image: "assets/menu/bossam.jpg",
+        badge: "",
+        serving: "2-3 Pax",
+        spicy: 1
+    },
+
+    // --------------------------------------------------------
+    // DOSILAK (LUNCH BOX)
+    // --------------------------------------------------------
+    {
+        id: "dosilak-l01",
+        category: "dosilak",
+        nameKo: "L01. 제육볶음도시락",
+        nameEn: "Jeyuk Bokkeum Dosilak",
+        nameZh: "辣炒猪肉便当",
+        price: "RM 25.00",
+        descKo: "매콤한 제육볶음(돼지 삼겹살)과 갓 지은 밥, 정갈한 밑반찬이 한데 담긴 든든한 점심 도시락",
+        descEn: "Stir-fried sliced pork belly in a spicy chili marinade, served with steamed rice and side dishes.",
+        descZh: "辣炒五花肉与白米饭及精选韩式小菜搭配的韩式工作便当",
+        image: "assets/menu/jeyuk_bokkeum_dosilak.png",
         badge: "",
         serving: "1 Pax",
-        spicy: 0
+        spicy: 1
     },
     {
         id: "dosilak-65",
@@ -1024,6 +1228,21 @@ const MENU_ITEMS = [
         spicy: 0
     },
     {
+        id: "dosilak-l06",
+        category: "dosilak",
+        nameKo: "L06. 닭갈비도시락",
+        nameEn: "Dakgalbi Dosilak",
+        nameZh: "辣酱烤鸡肉便当",
+        price: "RM 25.00",
+        descKo: "춘천식 매콤달콤한 닭갈비 볶음과 따뜻한 밥, 다오래 정통 반찬들이 함께 어우러진 점심 도시락",
+        descEn: "Spicy stir-fried chicken chunks in gochujang sauce, served with rice and traditional sides.",
+        descZh: "春川风味辣炒鸡肉与白米饭及精选小菜搭配的营养便当",
+        image: "assets/menu/dakgalbi_dosilak.png",
+        badge: "",
+        serving: "1 Pax",
+        spicy: 1
+    },
+    {
         id: "dosilak-69",
         category: "dosilak",
         nameKo: "L07. 김치볶음도시락",
@@ -1038,6 +1257,25 @@ const MENU_ITEMS = [
         serving: "1 Pax",
         spicy: 1
     },
+    {
+        id: "dosilak-l08",
+        category: "dosilak",
+        nameKo: "L08. 비빔밥도시락",
+        nameEn: "Bibimbap Dosilak",
+        nameZh: "拌饭便当",
+        price: "RM 25.00",
+        descKo: "오색 나물과 볶은 소고기, 고추장 양념을 따로 담아 이동 중에도 신선하게 비벼 먹을 수 있는 비빔밥 도시락",
+        descEn: "Korean mixed rice with seasoned vegetables, beef, and gochujang sauce, packed in a lunchbox.",
+        descZh: "五色蔬菜和牛肉及特制辣酱搭配的韩式拌饭便当",
+        image: "assets/menu/bibimbap_dosilak.png",
+        badge: "",
+        serving: "1 Pax",
+        spicy: 0
+    },
+
+    // --------------------------------------------------------
+    // BEVERAGES
+    // --------------------------------------------------------
     {
         id: "beverage-70",
         category: "beverage",
@@ -1109,6 +1347,36 @@ const MENU_ITEMS = [
         descEn: "Traditional Korean Liquor (Soju)",
         descZh: "韩国传统烧酒",
         image: "assets/menu/soju.jpg",
+        badge: "",
+        serving: "1 Bottle",
+        spicy: 0
+    },
+    {
+        id: "beverage-v06",
+        category: "beverage",
+        nameKo: "V06. 자몽 소주",
+        nameEn: "Grapefruit Soju",
+        nameZh: "西柚味烧酒",
+        price: "RM 35.00",
+        descKo: "상큼하고 달콤한 자몽 천연 즙을 블렌딩하여 여성들에게도 인기가 높은 과일 소주",
+        descEn: "Sweet and tangy grapefruit-flavored Korean Soju.",
+        descZh: "融入甜美西柚果汁的果味烧酒，入口清甜，备受欢迎",
+        image: "assets/menu/grapefruit_soju.jpg",
+        badge: "",
+        serving: "1 Bottle",
+        spicy: 0
+    },
+    {
+        id: "beverage-v07",
+        category: "beverage",
+        nameKo: "V07. 청포도 소주",
+        nameEn: "Green Grape Soju",
+        nameZh: "青葡萄味烧酒",
+        price: "RM 35.00",
+        descKo: "싱그럽고 청량한 청포도 즙을 넣어 가볍고 달콤하게 즐길 수 있는 인기 과일 소주",
+        descEn: "Refreshing and sweet green grape-flavored Korean Soju.",
+        descZh: "融入爽口青葡萄果汁的果味烧酒，清新香甜",
+        image: "assets/menu/greengrape_soju.jpg",
         badge: "",
         serving: "1 Bottle",
         spicy: 0
@@ -1244,6 +1512,21 @@ const MENU_ITEMS = [
         descEn: "Korean Raspberry Wine known for its sweet, rich berry flavor and health benefits.",
         descZh: "覆盆子酒（采用优质覆盆子酿制的甘甜韩国覆盆子酒）",
         image: "assets/menu/bokbunja.jpg",
+        badge: "",
+        serving: "1 Bottle",
+        spicy: 0
+    },
+    {
+        id: "beverage-v17",
+        category: "beverage",
+        nameKo: "V17. 막걸리",
+        nameEn: "Makgeolli",
+        nameZh: "韩国米酒 (马格利)",
+        price: "RM 35.00",
+        descKo: "쌀과 곡물을 발효시켜 만든 한국 전통 탁주로 걸쭉하고 유산균이 가득해 고소하고 톡 쏘는 맛의 막걸리",
+        descEn: "Traditional Korean unfiltered rice wine with a sweet, milky, and slightly fizzy flavor.",
+        descZh: "大米和谷物发酵酿制的传统韩式浊米酒，微甜爽口，乳酸菌丰富",
+        image: "assets/menu/makgeolli.jpg",
         badge: "",
         serving: "1 Bottle",
         spicy: 0
