@@ -53,9 +53,15 @@ def main():
             print(response.text[:500])
             return
         
-        data = response.json()
+        try:
+            data = response.json()
+        except ValueError as json_err:
+            print(f"Response is not valid JSON! Error: {json_err}")
+            print("Printing first 1000 characters of response.text:")
+            print(response.text[:1000])
+            return
     except Exception as e:
-        print(f"Error fetching/parsing JSON: {e}")
+        print(f"Error fetching/parsing: {e}")
         return
 
     # Instagram formats user data differently depending on the query type
