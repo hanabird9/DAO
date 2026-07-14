@@ -14,17 +14,7 @@ if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL !== "" && typeof window.
 } else {
     console.warn("Supabase SDK is not loaded or config is empty. Falling back to local storage mode.");
 }
-// Global fallback handler for missing or broken image assets
-window.handleImageError = function(img, category) {
-    img.onerror = null; // Prevent infinite loops
-    if (category === "beef" || category === "set" || category === "other-bbq" || category === "johor-special") {
-        img.src = "assets/hero.jpg";
-    } else if (category === "pork") {
-        img.src = "assets/pork.jpg";
-    } else {
-        img.src = "assets/banchan.jpg";
-    }
-};
+// Global fallback handler has been removed as all menu images are now locally downloaded and verified.
 
 
 // Trilingual Menu Data from daorae.net (verified with correct images and prices)
@@ -106,27 +96,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 spicyHtml += '</div>';
             }
             
-            // Robust fallback for missing images to avoid misrepresenting food
-            let imageSrc = item.image;
-            if (!imageSrc || imageSrc === "None") {
-                if (item.category === "beef") {
-                    imageSrc = "assets/hero.jpg";
-                } else if (item.category === "pork") {
-                    imageSrc = "assets/pork.jpg";
-                } else if (item.category === "stew" || item.category === "hotpot") {
-                    imageSrc = "assets/banchan.jpg";
-                } else {
-                    imageSrc = "assets/banchan.jpg";
-                }
-            }
-            
             const card = document.createElement("div");
             card.className = "menu-card reveal";
             card.setAttribute("data-id", item.id);
             card.style.cursor = "pointer"; // Indicating clickable card
             card.innerHTML = `
                 <div class="menu-card-img-wrapper">
-                    <img src="${imageSrc}" alt="${item.nameEn}" loading="lazy" onerror="handleImageError(this, '${item.category}')">
+                    <img src="${item.image}" alt="${item.nameEn}" loading="lazy">
                     ${item.badge ? `<span class="menu-card-badge">${item.badge}</span>` : ''}
                 </div>
                 <div class="menu-card-content">
@@ -408,26 +384,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function openMenuModal(item) {
         if (!modal) return;
         
-        let imageSrc = item.image;
-        if (!imageSrc || imageSrc === "None") {
-            if (item.category === "beef") {
-                imageSrc = "assets/hero.jpg";
-            } else if (item.category === "pork") {
-                imageSrc = "assets/pork.jpg";
-            } else {
-                imageSrc = "assets/banchan.jpg";
-            }
-        }
-        
         const modalImg = document.getElementById("modalMenuImg");
         if (modalImg) {
-            modalImg.src = imageSrc;
+            modalImg.src = item.image;
             modalImg.alt = item.nameEn;
-            modalImg.onerror = function() {
-                if (typeof handleImageError === "function") {
-                    handleImageError(modalImg, item.category);
-                }
-            };
         }
         
         const textKo = document.getElementById("modalMenuNameKo");
