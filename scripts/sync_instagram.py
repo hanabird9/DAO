@@ -39,15 +39,23 @@ def main():
         "Referer": "https://www.instagram.com/"
     }
     
-    cookies = {
-        "sessionid": session_id
-    }
+    session = requests.Session()
+    
+    # Establish base cookies from homepage first (mid, ig_did, csrftoken, etc.)
+    print("Establishing base cookies from Instagram homepage...")
+    try:
+        session.get("https://www.instagram.com/", headers=headers, timeout=15)
+    except Exception as e:
+        print(f"Warning: Failed to fetch homepage for cookies: {e}")
+
+    # Set session ID cookie
+    session.cookies.set("sessionid", session_id, domain=".instagram.com")
 
     url = f"https://www.instagram.com/{INSTAGRAM_PROFILE}/?__a=1&__d=dis"
     print(f"Fetching Instagram profile JSON from {url}...")
     
     try:
-        response = requests.get(url, headers=headers, cookies=cookies, timeout=20)
+        response = session.get(url, headers=headers, timeout=20)
         if not (200 <= response.status_code < 300):
             print(f"Failed to fetch profile: HTTP {response.status_code}")
             print(response.text[:500])
