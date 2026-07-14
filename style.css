@@ -455,6 +455,7 @@ ul {
     left: 50%;
     transform: translate(-50%, -50%);
     background: var(--color-accent);
+    color: #ffffff; /* White text color for readability */
     padding: 20px;
     border-radius: 50%;
     width: 100px;
