@@ -8,9 +8,9 @@
 const WHATSAPP_PHONE_NUMBER = "60126398303"; 
 
 // Initialize Supabase Client if config is available
-let supabase = null;
+let supabaseClient = null;
 if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL !== "" && typeof window.supabase !== 'undefined') {
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 } else {
     console.warn("Supabase SDK is not loaded or config is empty. Falling back to local storage mode.");
 }
@@ -1317,9 +1317,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 createdAt: new Date().toISOString()
             };
             
-            if (supabase) {
+            if (supabaseClient) {
                 try {
-                    const { error } = await supabase
+                    const { error } = await supabaseClient
                         .from('reservations')
                         .insert([newReservation]);
                     if (error) throw error;
@@ -1394,10 +1394,10 @@ document.addEventListener("DOMContentLoaded", () => {
         
         let gallery = [];
         
-        if (supabase) {
+        if (supabaseClient) {
             try {
                 // Fetch from Supabase
-                const { data, error } = await supabase
+                const { data, error } = await supabaseClient
                     .from('gallery')
                     .select('*')
                     .order('id', { ascending: true });
@@ -1409,7 +1409,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     // Seed Supabase with DEFAULT_GALLERY
                     for (const item of DEFAULT_GALLERY) {
-                        await supabase.from('gallery').insert([{
+                        await supabaseClient.from('gallery').insert([{
                             src: item.src,
                             category: item.category,
                             title: item.title

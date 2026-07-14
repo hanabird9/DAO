@@ -8,9 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const ADMIN_PASSCODE = "daoraejb1!"; // Updated secure admin passcode
     
     // Initialize Supabase Client if config is available
-    let supabase = null;
+    let supabaseClient = null;
     if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL !== "" && typeof window.supabase !== 'undefined') {
-        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     } else {
         console.warn("Supabase SDK is not loaded or config is empty. Falling back to local storage mode.");
     }
@@ -110,9 +110,9 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     async function getReservations() {
-        if (supabase) {
+        if (supabaseClient) {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await supabaseClient
                     .from('reservations')
                     .select('*')
                     .order('createdAt', { ascending: false });
@@ -128,9 +128,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function getGallery() {
-        if (supabase) {
+        if (supabaseClient) {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await supabaseClient
                     .from('gallery')
                     .select('*')
                     .order('id', { ascending: true });
@@ -285,9 +285,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Status management handlers exposed globally so onclick handlers work
     window.updateReservationStatus = async function(id, newStatus) {
-        if (supabase) {
+        if (supabaseClient) {
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('reservations')
                     .update({ status: newStatus })
                     .eq('id', id);
@@ -322,9 +322,9 @@ document.addEventListener("DOMContentLoaded", () => {
     window.deleteReservation = async function(id) {
         if (!confirm("Are you sure you want to delete this reservation log permanently?")) return;
         
-        if (supabase) {
+        if (supabaseClient) {
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('reservations')
                     .delete()
                     .eq('id', id);
@@ -421,9 +421,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function savePhoto(src, category, title) {
         const newPhoto = { src: src, category: category, title: title };
-        if (supabase) {
+        if (supabaseClient) {
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('gallery')
                     .insert([newPhoto]);
                 if (error) throw error;
@@ -474,9 +474,9 @@ document.addEventListener("DOMContentLoaded", () => {
     window.deletePhoto = async function(idOrIndex) {
         if (!confirm("Are you sure you want to remove this photo from the website gallery?")) return;
 
-        if (supabase && typeof idOrIndex === 'string') {
+        if (supabaseClient && typeof idOrIndex === 'string') {
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('gallery')
                     .delete()
                     .eq('id', idOrIndex);
