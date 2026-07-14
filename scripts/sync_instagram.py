@@ -43,13 +43,25 @@ def main():
     username = os.environ.get("INSTAGRAM_USERNAME")
     password = os.environ.get("INSTAGRAM_PASSWORD")
 
-    if username and password:
+    logged_in = False
+    if username:
         try:
-            print(f"Attempting login as {username}...")
-            L.login(username, password)
-            print("Login successful!")
+            print(f"Attempting to load session for {username}...")
+            L.load_session_from_file(username)
+            print("Session loaded successfully!")
+            logged_in = True
         except Exception as e:
-            print(f"Login failed: {e}. Attempting to fetch publicly.")
+            print(f"Failed to load session from file: {e}")
+
+        if not logged_in and password:
+            try:
+                print(f"Attempting password login as {username}...")
+                L.login(username, password)
+                L.save_session_to_file()
+                print("Password login successful!")
+                logged_in = True
+            except Exception as e:
+                print(f"Password login failed: {e}. Attempting to fetch publicly.")
     else:
         print("No credentials found. Fetching publicly.")
 
