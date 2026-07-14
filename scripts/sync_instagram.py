@@ -48,7 +48,7 @@ def main():
     
     try:
         response = requests.get(url, headers=headers, cookies=cookies, timeout=20)
-        if response.status_code != 200:
+        if not (200 <= response.status_code < 300):
             print(f"Failed to fetch profile: HTTP {response.status_code}")
             print(response.text[:500])
             return
