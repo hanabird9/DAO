@@ -14,6 +14,17 @@ if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL !== "" && typeof window.
 } else {
     console.warn("Supabase SDK is not loaded or config is empty. Falling back to local storage mode.");
 }
+// Global fallback handler for missing or broken image assets
+window.handleImageError = function(img, category) {
+    img.onerror = null; // Prevent infinite loops
+    if (category === "beef" || category === "set" || category === "other-bbq" || category === "johor-special") {
+        img.src = "assets/hero.jpg";
+    } else if (category === "pork") {
+        img.src = "assets/pork.jpg";
+    } else {
+        img.src = "assets/banchan.jpg";
+    }
+};
 
 
 // Trilingual Menu Data from daorae.net (verified with correct images and prices)
@@ -115,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
             card.style.cursor = "pointer"; // Indicating clickable card
             card.innerHTML = `
                 <div class="menu-card-img-wrapper">
-                    <img src="${imageSrc}" alt="${item.nameEn}" loading="lazy">
+                    <img src="${imageSrc}" alt="${item.nameEn}" loading="lazy" onerror="handleImageError(this, '${item.category}')">
                     ${item.badge ? `<span class="menu-card-badge">${item.badge}</span>` : ''}
                 </div>
                 <div class="menu-card-content">
@@ -412,6 +423,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (modalImg) {
             modalImg.src = imageSrc;
             modalImg.alt = item.nameEn;
+            modalImg.onerror = function() {
+                if (typeof handleImageError === "function") {
+                    handleImageError(modalImg, item.category);
+                }
+            };
         }
         
         const textKo = document.getElementById("modalMenuNameKo");
