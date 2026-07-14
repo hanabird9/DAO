@@ -11,7 +11,7 @@
     <meta name="robots" content="index, follow">
     
     <!-- CSS Stylesheets -->
-    <link rel="stylesheet" href="style.css?v=1.0.3">
+    <link rel="stylesheet" href="style.css?v=1.0.4">
     
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -418,8 +418,49 @@
     <!-- Supabase Integration -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="config.js?v=1.0.1"></script>
+    <!-- Menu Detail Modal -->
+    <div id="menuDetailModal" class="menu-modal">
+        <div class="menu-modal-overlay"></div>
+        <div class="menu-modal-container">
+            <button id="closeMenuModalBtn" class="menu-modal-close" aria-label="Close modal">
+                <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+            </button>
+            <div class="menu-modal-content-wrapper">
+                <div class="menu-modal-image-side">
+                    <img id="modalMenuImg" src="" alt="">
+                </div>
+                <div class="menu-modal-info-side">
+                    <div class="menu-modal-titles">
+                        <span id="modalMenuNameKo" class="modal-title-ko"></span>
+                        <h2 id="modalMenuNameEn" class="modal-title-en"></h2>
+                        <span id="modalMenuNameZh" class="modal-title-zh"></span>
+                    </div>
+                    <div id="modalMenuPrice" class="modal-price"></div>
+                    <hr class="modal-divider">
+                    <div class="modal-desc-section">
+                        <h4 class="modal-desc-heading">Details / 상세 정보 / 菜品详情</h4>
+                        <div class="modal-desc-block">
+                            <div class="modal-desc-item">
+                                <span class="lang-flag">KR</span>
+                                <p id="modalMenuDescKo" class="modal-desc-text ko"></p>
+                            </div>
+                            <div class="modal-desc-item">
+                                <span class="lang-flag">EN</span>
+                                <p id="modalMenuDescEn" class="modal-desc-text en"></p>
+                            </div>
+                            <div class="modal-desc-item">
+                                <span class="lang-flag">ZH</span>
+                                <p id="modalMenuDescZh" class="modal-desc-text zh"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- JS Scripts -->
     <script src="menu_data.js?v=1.0.2"></script>
-    <script src="app.js?v=1.0.3"></script>
+    <script src="app.js?v=1.0.4"></script>
 </body>
 </html>

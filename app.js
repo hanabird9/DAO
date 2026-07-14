@@ -112,6 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const card = document.createElement("div");
             card.className = "menu-card reveal";
             card.setAttribute("data-id", item.id);
+            card.style.cursor = "pointer"; // Indicating clickable card
             card.innerHTML = `
                 <div class="menu-card-img-wrapper">
                     <img src="${imageSrc}" alt="${item.nameEn}" loading="lazy">
@@ -126,15 +127,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
                         <span class="menu-price">${item.price}</span>
                     </div>
-                    <div class="menu-desc">
-                        <div class="menu-desc-ko" style="margin-bottom: 5px; font-weight: 500; font-size: 0.85rem; line-height: 1.4; color: var(--color-text-bright);">${item.descKo}</div>
-                        <div class="menu-desc-en" style="margin-bottom: 5px; font-size: 0.82rem; line-height: 1.4; color: var(--color-text-standard);">${item.descEn}</div>
-                        <div class="menu-desc-zh" style="font-size: 0.82rem; line-height: 1.4; color: var(--color-text-muted); font-style: italic;">${item.descZh}</div>
-                    </div>
+                    <p class="menu-desc" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; font-size: 0.82rem; line-height: 1.4; height: 2.8em; margin-bottom: 15px; color: var(--color-text-standard);">
+                        ${item.descEn}
+                    </p>
                     <div class="menu-card-footer">
-                        <div class="menu-serving">
-                            <i data-lucide="info" style="width:14px; height:14px;"></i>
-                            <span>Serving: ${item.serving}</span>
+                        <div class="menu-view-details" style="font-size: 0.8rem; font-weight: 600; color: var(--color-gold); display: flex; align-items: center; gap: 4px;">
+                            <i data-lucide="eye" style="width: 14px; height: 14px;"></i>
+                            <span>View Details</span>
                         </div>
                         ${spicyHtml}
                     </div>
@@ -389,6 +388,88 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         revealElements.forEach(el => el.classList.add("active"));
     }
+
+    // 8. Menu Details Modal Event Handlers
+    const modal = document.getElementById("menuDetailModal");
+    const closeBtn = document.getElementById("closeMenuModalBtn");
+    const modalOverlay = modal ? modal.querySelector(".menu-modal-overlay") : null;
+    
+    function openMenuModal(item) {
+        if (!modal) return;
+        
+        let imageSrc = item.image;
+        if (!imageSrc || imageSrc === "None") {
+            if (item.category === "beef") {
+                imageSrc = "assets/hero.jpg";
+            } else if (item.category === "pork") {
+                imageSrc = "assets/pork.jpg";
+            } else {
+                imageSrc = "assets/banchan.jpg";
+            }
+        }
+        
+        const modalImg = document.getElementById("modalMenuImg");
+        if (modalImg) {
+            modalImg.src = imageSrc;
+            modalImg.alt = item.nameEn;
+        }
+        
+        const textKo = document.getElementById("modalMenuNameKo");
+        const textEn = document.getElementById("modalMenuNameEn");
+        const textZh = document.getElementById("modalMenuNameZh");
+        const priceText = document.getElementById("modalMenuPrice");
+        
+        if (textKo) textKo.textContent = item.nameKo;
+        if (textEn) textEn.textContent = item.nameEn;
+        if (textZh) textZh.textContent = item.nameZh;
+        if (priceText) priceText.textContent = item.price;
+        
+        const descKo = document.getElementById("modalMenuDescKo");
+        const descEn = document.getElementById("modalMenuDescEn");
+        const descZh = document.getElementById("modalMenuDescZh");
+        
+        if (descKo) descKo.textContent = item.descKo || "설명이 존재하지 않습니다.";
+        if (descEn) descEn.textContent = item.descEn || "No explanation available.";
+        if (descZh) descZh.textContent = item.descZh || "暂无介绍。";
+        
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden"; // Prevent scrolling behind modal
+    }
+    
+    function closeMenuModal() {
+        if (!modal) return;
+        modal.classList.remove("active");
+        document.body.style.overflow = ""; // Re-enable scroll
+    }
+    
+    // Bind click events on menuGrid utilizing Event Delegation
+    if (menuGrid) {
+        menuGrid.addEventListener("click", (e) => {
+            const card = e.target.closest(".menu-card");
+            if (!card) return;
+            
+            const itemId = card.getAttribute("data-id");
+            if (typeof MENU_ITEMS !== "undefined") {
+                const item = MENU_ITEMS.find(i => i.id === itemId);
+                if (item) {
+                    openMenuModal(item);
+                }
+            }
+        });
+    }
+    
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeMenuModal);
+    }
+    if (modalOverlay) {
+        modalOverlay.addEventListener("click", closeMenuModal);
+    }
+    
+    window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            closeMenuModal();
+        }
+    });
 });
 
 
