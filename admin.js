@@ -401,10 +401,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 const file = files[0];
                 const reader = new FileReader();
+                
+                // Show a loading status since compression is async
+                const submitBtn = addPhotoForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Processing Image...";
+
                 reader.onload = async function(evt) {
-                    await savePhoto(evt.target.result, category, title);
-                    addPhotoForm.reset();
-                    uploadedFileName.textContent = "No file selected";
+                    try {
+                        const rawBase64 = evt.target.result;
+                        // Compress to max 1000px and 0.7 quality (typical output size ~50KB-100KB)
+                        const compressedBase64 = await compressImage(rawBase64, 1000, 1000, 0.7);
+                        await savePhoto(compressedBase64, category, title);
+                    } catch (err) {
+                        console.error("Compression/Upload error:", err);
+                        alert("An error occurred while uploading. Please try again.");
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                        addPhotoForm.reset();
+                        uploadedFileName.textContent = "No file selected";
+                    }
                 };
                 reader.readAsDataURL(file); // Convert image to Base64 String
             } else {
@@ -496,6 +514,44 @@ document.addEventListener("DOMContentLoaded", () => {
         await loadGalleryManager();
     };
 
+
+    // Helper to compress image client-side before upload
+    function compressImage(base64Str, maxWidth, maxHeight, quality) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.src = base64Str;
+            img.onload = function() {
+                let width = img.width;
+                let height = img.height;
+                
+                if (width > height) {
+                    if (width > maxWidth) {
+                        height = Math.round((height * maxWidth) / width);
+                        width = maxWidth;
+                    }
+                } else {
+                    if (height > maxHeight) {
+                        width = Math.round((width * maxHeight) / height);
+                        height = maxHeight;
+                    }
+                }
+                
+                const canvas = document.createElement("canvas");
+                canvas.width = width;
+                canvas.height = height;
+                
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                // Convert to compressed JPEG data URL
+                const compressedBase64 = canvas.toDataURL("image/jpeg", quality);
+                resolve(compressedBase64);
+            };
+            img.onerror = function() {
+                resolve(base64Str);
+            };
+        });
+    }
 
     // Helper utility to escape HTML inputs
     function escapeHtml(str) {
