@@ -6,6 +6,13 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // 1. Passcode Authentication Config
     const ADMIN_PASSCODE = "daoraejb1!"; // Updated secure admin passcode
+    
+    // Initialize Supabase Client if config is available
+    let supabase = null;
+    if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL !== "") {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+    
     const AUTH_KEY = "daorae_admin_auth";
 
     const loginContainer = document.getElementById("login-container");
@@ -60,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const pageTitle = document.getElementById("page-title");
 
     navItems.forEach(item => {
-        item.addEventListener("click", () => {
+        item.addEventListener("click", async () => {
             // Remove active classes
             navItems.forEach(n => n.classList.remove("active"));
             tabPanels.forEach(p => p.classList.remove("active"));
@@ -76,12 +83,12 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // Refresh data on switch
             if (targetTab === "tab-overview") {
-                loadMetrics();
-                loadRecentReservations();
+                await loadMetrics();
+                await loadRecentReservations();
             } else if (targetTab === "tab-reservations") {
-                loadAllReservations();
+                await loadAllReservations();
             } else if (targetTab === "tab-gallery") {
-                loadGalleryManager();
+                await loadGalleryManager();
             }
         });
     });
@@ -100,7 +107,43 @@ document.addEventListener("DOMContentLoaded", () => {
         { src: "assets/interior.jpg", category: "Interior", title: "Warm Dining Ambience" }
     ];
 
-    function initDashboard() {
+    async function getReservations() {
+        if (supabase) {
+            try {
+                const { data, error } = await supabase
+                    .from('reservations')
+                    .select('*')
+                    .order('createdAt', { ascending: false });
+                if (error) throw error;
+                return data || [];
+            } catch (err) {
+                console.error("Supabase fetch reservations failed, using local fallback:", err);
+                return JSON.parse(localStorage.getItem("daorae_reservations")) || [];
+            }
+        } else {
+            return JSON.parse(localStorage.getItem("daorae_reservations")) || [];
+        }
+    }
+
+    async function getGallery() {
+        if (supabase) {
+            try {
+                const { data, error } = await supabase
+                    .from('gallery')
+                    .select('*')
+                    .order('id', { ascending: true });
+                if (error) throw error;
+                return data || [];
+            } catch (err) {
+                console.error("Supabase fetch gallery failed, using local fallback:", err);
+                return JSON.parse(localStorage.getItem("daorae_gallery")) || DEFAULT_GALLERY;
+            }
+        } else {
+            return JSON.parse(localStorage.getItem("daorae_gallery")) || DEFAULT_GALLERY;
+        }
+    }
+
+    async function initDashboard() {
         // Load Lucide icons
         lucide.createIcons();
 
@@ -109,16 +152,16 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("current-date-str").textContent = new Date().toLocaleDateString('en-US', options);
 
         // Core data loader
-        loadMetrics();
-        loadRecentReservations();
+        await loadMetrics();
+        await loadRecentReservations();
         setupGalleryForm();
         setupReservationFilters();
     }
 
     // Refresh Overview stats
-    function loadMetrics() {
-        const reservations = JSON.parse(localStorage.getItem("daorae_reservations")) || [];
-        const gallery = JSON.parse(localStorage.getItem("daorae_gallery")) || DEFAULT_GALLERY;
+    async function loadMetrics() {
+        const reservations = await getReservations();
+        const gallery = await getGallery();
 
         document.getElementById("stat-total-res").textContent = reservations.length;
         document.getElementById("stat-pending-res").textContent = reservations.filter(r => r.status === "Pending").length;
@@ -128,11 +171,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // 4. Reservations Management Logic
-    function loadRecentReservations() {
+    async function loadRecentReservations() {
         const listContainer = document.getElementById("recent-reservations-list");
         if (!listContainer) return;
 
-        let reservations = JSON.parse(localStorage.getItem("daorae_reservations")) || [];
+        let reservations = await getReservations();
         // Sort descending by date created
         reservations.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         
@@ -180,20 +223,20 @@ document.addEventListener("DOMContentLoaded", () => {
     function setupReservationFilters() {
         const filters = document.querySelectorAll("[data-res-filter]");
         filters.forEach(btn => {
-            btn.addEventListener("click", () => {
+            btn.addEventListener("click", async () => {
                 filters.forEach(f => f.classList.remove("active"));
                 btn.classList.add("active");
                 activeResFilter = btn.getAttribute("data-res-filter");
-                loadAllReservations();
+                await loadAllReservations();
             });
         });
     }
 
-    function loadAllReservations() {
+    async function loadAllReservations() {
         const listContainer = document.getElementById("all-reservations-list");
         if (!listContainer) return;
 
-        let reservations = JSON.parse(localStorage.getItem("daorae_reservations")) || [];
+        let reservations = await getReservations();
         // Sort descending by creation date
         reservations.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
@@ -239,38 +282,72 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Status management handlers exposed globally so onclick handlers work
-    window.updateReservationStatus = function(id, newStatus) {
-        let reservations = JSON.parse(localStorage.getItem("daorae_reservations")) || [];
-        const index = reservations.findIndex(r => r.id === id);
-        if (index !== -1) {
-            reservations[index].status = newStatus;
-            localStorage.setItem("daorae_reservations", JSON.stringify(reservations));
-            
-            // Reload active tab data
-            const activeTabId = document.querySelector(".nav-item.active").getAttribute("data-tab");
-            if (activeTabId === "tab-overview") {
-                loadMetrics();
-                loadRecentReservations();
-            } else {
-                loadAllReservations();
+    window.updateReservationStatus = async function(id, newStatus) {
+        if (supabase) {
+            try {
+                const { error } = await supabase
+                    .from('reservations')
+                    .update({ status: newStatus })
+                    .eq('id', id);
+                if (error) throw error;
+            } catch (err) {
+                console.error("Supabase update error, falling back to local:", err);
+                updateLocal(id, newStatus);
+            }
+        } else {
+            updateLocal(id, newStatus);
+        }
+
+        function updateLocal(resId, statusVal) {
+            let reservations = JSON.parse(localStorage.getItem("daorae_reservations")) || [];
+            const index = reservations.findIndex(r => r.id === resId);
+            if (index !== -1) {
+                reservations[index].status = statusVal;
+                localStorage.setItem("daorae_reservations", JSON.stringify(reservations));
             }
         }
-    };
-
-    window.deleteReservation = function(id) {
-        if (!confirm("Are you sure you want to delete this reservation log permanently?")) return;
-        
-        let reservations = JSON.parse(localStorage.getItem("daorae_reservations")) || [];
-        reservations = reservations.filter(r => r.id !== id);
-        localStorage.setItem("daorae_reservations", JSON.stringify(reservations));
         
         // Reload active tab data
         const activeTabId = document.querySelector(".nav-item.active").getAttribute("data-tab");
         if (activeTabId === "tab-overview") {
-            loadMetrics();
-            loadRecentReservations();
+            await loadMetrics();
+            await loadRecentReservations();
         } else {
-            loadAllReservations();
+            await loadAllReservations();
+        }
+    };
+
+    window.deleteReservation = async function(id) {
+        if (!confirm("Are you sure you want to delete this reservation log permanently?")) return;
+        
+        if (supabase) {
+            try {
+                const { error } = await supabase
+                    .from('reservations')
+                    .delete()
+                    .eq('id', id);
+                if (error) throw error;
+            } catch (err) {
+                console.error("Supabase delete error, falling back to local:", err);
+                deleteLocal(id);
+            }
+        } else {
+            deleteLocal(id);
+        }
+
+        function deleteLocal(resId) {
+            let reservations = JSON.parse(localStorage.getItem("daorae_reservations")) || [];
+            reservations = reservations.filter(r => r.id !== resId);
+            localStorage.setItem("daorae_reservations", JSON.stringify(reservations));
+        }
+        
+        // Reload active tab data
+        const activeTabId = document.querySelector(".nav-item.active").getAttribute("data-tab");
+        if (activeTabId === "tab-overview") {
+            await loadMetrics();
+            await loadRecentReservations();
+        } else {
+            await loadAllReservations();
         }
     };
 
@@ -308,7 +385,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Form Submit
         const addPhotoForm = document.getElementById("add-photo-form");
-        addPhotoForm.addEventListener("submit", (e) => {
+        addPhotoForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
             const title = document.getElementById("photo-title").value.trim();
@@ -322,8 +399,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 const file = files[0];
                 const reader = new FileReader();
-                reader.onload = function(evt) {
-                    savePhoto(evt.target.result, category, title);
+                reader.onload = async function(evt) {
+                    await savePhoto(evt.target.result, category, title);
                     addPhotoForm.reset();
                     uploadedFileName.textContent = "No file selected";
                 };
@@ -334,39 +411,52 @@ document.addEventListener("DOMContentLoaded", () => {
                     alert("Please enter a valid image URL.");
                     return;
                 }
-                savePhoto(url, category, title);
+                await savePhoto(url, category, title);
                 addPhotoForm.reset();
             }
         });
     }
 
-    function savePhoto(src, category, title) {
-        let gallery = JSON.parse(localStorage.getItem("daorae_gallery"));
-        if (!gallery || gallery.length === 0) {
-            gallery = DEFAULT_GALLERY;
+    async function savePhoto(src, category, title) {
+        const newPhoto = { src: src, category: category, title: title };
+        if (supabase) {
+            try {
+                const { error } = await supabase
+                    .from('gallery')
+                    .insert([newPhoto]);
+                if (error) throw error;
+            } catch (err) {
+                console.error("Supabase save photo failed, using local:", err);
+                saveLocal(newPhoto);
+            }
+        } else {
+            saveLocal(newPhoto);
         }
 
-        const newPhoto = { src: src, category: category, title: title };
-        gallery.push(newPhoto);
-        localStorage.setItem("daorae_gallery", JSON.stringify(gallery));
+        function saveLocal(photoObj) {
+            let gallery = JSON.parse(localStorage.getItem("daorae_gallery")) || DEFAULT_GALLERY;
+            gallery.push(photoObj);
+            localStorage.setItem("daorae_gallery", JSON.stringify(gallery));
+        }
 
-        loadGalleryManager();
-        alert("Photo successfully added to live website gallery!");
+        await loadGalleryManager();
+        alert("Photo successfully added to website gallery!");
     }
 
-    function loadGalleryManager() {
+    async function loadGalleryManager() {
         const gridContainer = document.getElementById("admin-gallery-grid-list");
         if (!gridContainer) return;
 
-        let gallery = JSON.parse(localStorage.getItem("daorae_gallery")) || DEFAULT_GALLERY;
+        let gallery = await getGallery();
 
         gridContainer.innerHTML = "";
         gallery.forEach((item, index) => {
             const itemDiv = document.createElement("div");
             itemDiv.className = "admin-gallery-item";
+            const deleteArg = item.id ? `'${item.id}'` : index;
             itemDiv.innerHTML = `
                 <img src="${item.src}" alt="${escapeHtml(item.title)}">
-                <button class="delete-photo-btn" onclick="deletePhoto(${index})" title="Delete Photo">
+                <button class="delete-photo-btn" onclick="deletePhoto(${deleteArg})" title="Delete Photo">
                     <i data-lucide="trash-2"></i>
                 </button>
                 <div class="admin-gallery-info">
@@ -379,14 +469,29 @@ document.addEventListener("DOMContentLoaded", () => {
         lucide.createIcons();
     }
 
-    window.deletePhoto = function(index) {
+    window.deletePhoto = async function(idOrIndex) {
         if (!confirm("Are you sure you want to remove this photo from the website gallery?")) return;
 
-        let gallery = JSON.parse(localStorage.getItem("daorae_gallery")) || DEFAULT_GALLERY;
-        gallery.splice(index, 1);
-        localStorage.setItem("daorae_gallery", JSON.stringify(gallery));
+        if (supabase && typeof idOrIndex === 'string') {
+            try {
+                const { error } = await supabase
+                    .from('gallery')
+                    .delete()
+                    .eq('id', idOrIndex);
+                if (error) throw error;
+            } catch (err) {
+                console.error("Supabase delete photo failed:", err);
+                alert("Database connection error. Unable to delete photo.");
+                return;
+            }
+        } else {
+            let gallery = JSON.parse(localStorage.getItem("daorae_gallery")) || DEFAULT_GALLERY;
+            const index = parseInt(idOrIndex);
+            gallery.splice(index, 1);
+            localStorage.setItem("daorae_gallery", JSON.stringify(gallery));
+        }
 
-        loadGalleryManager();
+        await loadGalleryManager();
     };
 
 

@@ -7,6 +7,13 @@
 // Format: Country Code (60 for Malaysia) followed by phone number, no spaces or special characters.
 const WHATSAPP_PHONE_NUMBER = "60126398303"; 
 
+// Initialize Supabase Client if config is available
+let supabase = null;
+if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL !== "") {
+    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}
+
+
 // Trilingual Menu Data from daorae.net (verified with correct images and prices)
 const MENU_ITEMS = [
     {
@@ -1273,7 +1280,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 5. Reservation Form Submission (Saves to localStorage and redirects to WhatsApp)
     const resForm = document.getElementById("whatsappReservationForm");
     if (resForm) {
-        resForm.addEventListener("submit", (e) => {
+        resForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             
             const nameInput = document.getElementById("res-name");
@@ -1295,7 +1302,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
             
-            // 1. Save Reservation locally for Admin Panel
+            // 1. Save Reservation locally/cloud for Admin Panel
             const newReservation = {
                 id: "res-" + Date.now(),
                 name: name,
@@ -1308,9 +1315,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 createdAt: new Date().toISOString()
             };
             
-            let reservations = JSON.parse(localStorage.getItem("daorae_reservations")) || [];
-            reservations.push(newReservation);
-            localStorage.setItem("daorae_reservations", JSON.stringify(reservations));
+            if (supabase) {
+                try {
+                    const { error } = await supabase
+                        .from('reservations')
+                        .insert([newReservation]);
+                    if (error) throw error;
+                } catch (err) {
+                    console.error("Supabase Save Error, falling back to localStorage:", err);
+                    saveToLocalStorage(newReservation);
+                }
+            } else {
+                saveToLocalStorage(newReservation);
+            }
+
+            function saveToLocalStorage(resObj) {
+                let reservations = JSON.parse(localStorage.getItem("daorae_reservations")) || [];
+                reservations.push(resObj);
+                localStorage.setItem("daorae_reservations", JSON.stringify(reservations));
+            }
             
             // 2. Format WhatsApp Message
             let message = `Hello Daorae Korean BBQ Bukit Indah! 😊\n\n`;
@@ -1363,14 +1386,45 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     ];
 
-    function initGallery() {
+    async function initGallery() {
         const galleryGrid = document.getElementById("gallery-grid");
         if (!galleryGrid) return;
         
-        let gallery = JSON.parse(localStorage.getItem("daorae_gallery"));
-        if (!gallery || gallery.length === 0) {
-            gallery = DEFAULT_GALLERY;
-            localStorage.setItem("daorae_gallery", JSON.stringify(gallery));
+        let gallery = [];
+        
+        if (supabase) {
+            try {
+                // Fetch from Supabase
+                const { data, error } = await supabase
+                    .from('gallery')
+                    .select('*')
+                    .order('id', { ascending: true });
+                
+                if (error) throw error;
+                
+                if (data && data.length > 0) {
+                    gallery = data;
+                } else {
+                    // Seed Supabase with DEFAULT_GALLERY
+                    for (const item of DEFAULT_GALLERY) {
+                        await supabase.from('gallery').insert([{
+                            src: item.src,
+                            category: item.category,
+                            title: item.title
+                        }]);
+                    }
+                    gallery = DEFAULT_GALLERY;
+                }
+            } catch (err) {
+                console.error("Supabase Gallery fetch failed, using fallback:", err);
+                gallery = JSON.parse(localStorage.getItem("daorae_gallery")) || DEFAULT_GALLERY;
+            }
+        } else {
+            gallery = JSON.parse(localStorage.getItem("daorae_gallery"));
+            if (!gallery || gallery.length === 0) {
+                gallery = DEFAULT_GALLERY;
+                localStorage.setItem("daorae_gallery", JSON.stringify(gallery));
+            }
         }
         
         galleryGrid.innerHTML = "";
