@@ -715,7 +715,7 @@ const MENU_ITEMS = [
         descKo: "신선한 돼지고기, 두부, 가래떡, 라면사리 등을 넣어 여럿이서 푸짐하게 즐기는 매콤한 김치전골",
         descEn: "Spicy hot pot with kimchi, pork, tofu, rice cake, and ramen noodles.",
         descZh: "放入泡菜、猪肉、豆腐、年糕和拉面同煮的经典韩式泡菜火锅",
-        image: "assets/menu/kimchi_jeongol.jpg",
+        image: "assets/menu/kimchi_jeongol.avif",
         badge: "",
         serving: "2-4 Pax",
         spicy: 1
@@ -730,7 +730,7 @@ const MENU_ITEMS = [
         descKo: "햄, 소시지, 베이크드 빈스, 라면사리 등을 듬뿍 넣어 얼큰하고 진한 육수의 의정부식 부대전골",
         descEn: "Spicy sausage and ham hot pot with baked beans, vegetables, and ramen noodles.",
         descZh: "放入多种香肠、火腿、芝士、洋葱和拉面同煮的香辣韩式部队火锅",
-        image: "assets/menu/budae_jeongol.jpg",
+        image: "assets/menu/budae_jeongol.avif",
         badge: "",
         serving: "2-3 Pax",
         spicy: 1
@@ -745,7 +745,7 @@ const MENU_ITEMS = [
         descKo: "부드러운 소고기와 쫄깃한 낙지, 신선한 야채가 조화를 이루는 영양 만점의 매콤한 불낙전골",
         descEn: "Spicy and nourishing combination of beef, small octopus, and fresh mushrooms.",
         descZh: "牛肉与整只章鱼同煮的经典高能海陆双拼辣味火锅，营养丰富",
-        image: "assets/menu/bulnak_jeongol.jpg",
+        image: "assets/menu/bulnak_jeongol.avif",
         badge: "",
         serving: "2-3 Pax",
         spicy: 1
@@ -760,7 +760,7 @@ const MENU_ITEMS = [
         descKo: "묵은지와 도톰한 돼지 삼겹살, 갈비를 가마솥에 장시간 푹 쪄내어 입에서 녹는 전통 김치찜",
         descEn: "Slow cooked aged kimchi stew with tender pork belly and ribs (30 min cooking time).",
         descZh: "酸爽的老熟泡菜与厚切猪五花肉和排骨慢火炖制，猪肉入口即化",
-        image: "assets/menu/kimchi_jjim.jpg",
+        image: "assets/menu/kimchi_jjim.avif",
         badge: "",
         serving: "2-3 Pax",
         spicy: 1
@@ -775,7 +775,7 @@ const MENU_ITEMS = [
         descKo: "다양한 종류의 신선한 버섯과 달콤한 소불고기, 당면을 맑은 육수에 보글보글 끓인 담백한 전골",
         descEn: "Sweet soy sauce-based beef stew cooked with assorted fresh mushrooms and glass noodles.",
         descZh: "各种新鲜蘑菇与韩式烤牛肉、粉条一起在清汤中熬煮，味道鲜甜清淡",
-        image: "assets/menu/beoseot_bulgogi_jeongol.jpg",
+        image: "assets/menu/beoseot_bulgogi_jeongol.avif",
         badge: "",
         serving: "2-3 Pax",
         spicy: 0
@@ -790,7 +790,7 @@ const MENU_ITEMS = [
         descKo: "부드러운 돼지 주물럭과 야채, 당면을 달콤한 특제 육수에 넣어 깔끔하게 끓인 전골 요리",
         descEn: "Sweet soy sauce-based pork stew cooked with vegetables and glass noodles.",
         descZh: "调味猪肉与新鲜蘑菇、粉条和各类蔬菜在清汤中熬煮的温润火锅",
-        image: "assets/menu/dwaeji_bulgogi_jeongol.jpg",
+        image: "assets/menu/dwaeji_bulgogi_jeongol.avif",
         badge: "",
         serving: "2-3 Pax",
         spicy: 0
@@ -805,7 +805,7 @@ const MENU_ITEMS = [
         descKo: "소갈비를 간장 소스에 밤, 은행, 대추, 무 등과 함께 달콤하게 조려낸 명절 대표 요리 갈비찜",
         descEn: "Braised beef short ribs simmered in a sweet soy sauce with chestnuts and dates.",
         descZh: "精选牛排骨与栗子、大枣等配料在甜酱油汁中慢火炖制的韩式招牌炖牛排",
-        image: "assets/menu/galbi_jjim.jpg",
+        image: "assets/menu/galbi_jjim.avif",
         badge: "",
         serving: "2-3 Pax",
         spicy: 0
@@ -820,7 +820,7 @@ const MENU_ITEMS = [
         descKo: "어린 닭의 뱃속에 인삼, 찹쌀, 마늘, 대추를 넣고 푹 끓여낸 여름철 최고의 전통 보양 약선탕",
         descEn: "Whole spring chicken stuffed with Korean ginseng, dates, garlic, and sticky rice.",
         descZh: "整只童子鸡内部填满高丽参、糯米、大蒜和大枣慢火熬制的传统韩国第一补汤",
-        image: "assets/menu/samgyetang.jpg",
+        image: "assets/menu/samgyetang.avif",
         badge: "",
         serving: "1 Pax",
         spicy: 0
