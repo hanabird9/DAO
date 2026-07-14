@@ -1,0 +1,11 @@
+# Windows system files
+[Dd]ouble[Cc]lick.txt
+[Tt]humbs.db
+[Ee]hthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Temp and logs
+*.log
+.gemini/

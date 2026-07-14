@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daorae Bukit Indah - Admin Dashboard</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <!-- ==========================================================================
+       LOGIN VIEW
+       ========================================================================== -->
+    <div id="login-container" class="login-wrapper">
+        <div class="login-card">
+            <img src="assets/logo.png" alt="Daorae Logo" class="login-logo">
+            <h2>Admin Login</h2>
+            <p>Access reservation management and gallery controls.</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="passcode">Admin Passcode</label>
+                    <input type="password" id="passcode" placeholder="Enter Admin Passcode" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login to Dashboard</button>
+                <div id="login-error" class="error-msg">Incorrect passcode. Please try again.</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       DASHBOARD VIEW
+       ========================================================================== -->
+    <div id="dashboard-container" class="dashboard-wrapper" style="display: none;">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <img src="assets/logo.png" alt="Daorae Logo">
+            </div>
+            
+            <nav class="sidebar-menu">
+                <button class="nav-item active" data-tab="tab-overview">
+                    <i data-lucide="layout-dashboard"></i> Overview
+                </button>
+                <button class="nav-item" data-tab="tab-reservations">
+                    <i data-lucide="calendar"></i> Reservations
+                </button>
+                <button class="nav-item" data-tab="tab-gallery">
+                    <i data-lucide="image"></i> Gallery Manager
+                </button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="btn-logout">
+                    <i data-lucide="log-out"></i> Sign Out
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Header bar -->
+            <header class="content-header">
+                <div class="header-title-area">
+                    <h1 id="page-title">Dashboard Overview</h1>
+                    <p class="current-date" id="current-date-str"></p>
+                </div>
+                <div class="header-actions">
+                    <a href="index.html" target="_blank" class="btn btn-outline">
+                        <i data-lucide="external-link"></i> Live Website
+                    </a>
+                </div>
+            </header>
+
+            <!-- ==========================================
+                 TAB: OVERVIEW
+                 ========================================== -->
+            <section id="tab-overview" class="tab-panel active">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon val-blue">
+                            <i data-lucide="calendar-check-2"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h3 id="stat-total-res">0</h3>
+                            <span>Total Bookings</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon val-amber">
+                            <i data-lucide="clock-3"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h3 id="stat-pending-res">0</h3>
+                            <span>Pending Review</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon val-green">
+                            <i data-lucide="check-circle-2"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h3 id="stat-confirmed-res">0</h3>
+                            <span>Confirmed</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon val-red">
+                            <i data-lucide="image"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h3 id="stat-gallery-count">0</h3>
+                            <span>Gallery Photos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activities Section -->
+                <div class="dashboard-split">
+                    <div class="split-card full-width">
+                        <div class="card-header">
+                            <h2>Recent Reservation Requests</h2>
+                            <button class="btn btn-text text-gold" id="view-all-res-link">View All</button>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Date / Time</th>
+                                        <th>Guests</th>
+                                        <th>Requests</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-reservations-list">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 TAB: RESERVATIONS
+                 ========================================== -->
+            <section id="tab-reservations" class="tab-panel">
+                <div class="panel-card">
+                    <div class="card-header flex-header">
+                        <h2>Reservations Database</h2>
+                        <div class="filter-controls">
+                            <button class="filter-option active" data-res-filter="all">All</button>
+                            <button class="filter-option" data-res-filter="Pending">Pending</button>
+                            <button class="filter-option" data-res-filter="Confirmed">Confirmed</button>
+                            <button class="filter-option" data-res-filter="Cancelled">Cancelled</button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Guests</th>
+                                    <th>Special Request</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="all-reservations-list">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 TAB: GALLERY MANAGER
+                 ========================================== -->
+            <section id="tab-gallery" class="tab-panel">
+                <div class="gallery-dashboard-grid">
+                    <!-- Photo Grid -->
+                    <div class="panel-card gallery-list-card">
+                        <div class="card-header">
+                            <h2>Active Photos in Grid</h2>
+                        </div>
+                        <div class="admin-gallery-grid" id="admin-gallery-grid-list">
+                            <!-- Dynamic gallery items -->
+                        </div>
+                    </div>
+
+                    <!-- Add Photo Form -->
+                    <div class="panel-card gallery-form-card">
+                        <div class="card-header">
+                            <h2>Add Photo to Gallery</h2>
+                        </div>
+                        <form id="add-photo-form">
+                            <div class="form-group">
+                                <label for="photo-title">Photo Title</label>
+                                <input type="text" id="photo-title" placeholder="e.g. Sizzling Ribs" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="photo-category">Category</label>
+                                <input type="text" id="photo-category" placeholder="e.g. Beef BBQ, Interior" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Photo Source</label>
+                                <div class="source-toggle">
+                                    <button type="button" class="toggle-btn active" id="btn-src-file">Local Upload</button>
+                                    <button type="button" class="toggle-btn" id="btn-src-url">Image URL</button>
+                                </div>
+                            </div>
+                            <!-- File Input Group -->
+                            <div class="form-group" id="input-group-file">
+                                <label for="photo-file" class="file-dropzone">
+                                    <i data-lucide="upload-cloud"></i>
+                                    <span>Click to upload image file</span>
+                                    <span class="file-name" id="uploaded-file-name">No file selected</span>
+                                    <input type="file" id="photo-file" accept="image/*" style="display: none;">
+                                </label>
+                            </div>
+                            <!-- URL Input Group -->
+                            <div class="form-group" id="input-group-url" style="display: none;">
+                                <label for="photo-url">Image URL</label>
+                                <input type="url" id="photo-url" placeholder="https://example.com/image.jpg">
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 15px;">
+                                <i data-lucide="plus"></i> Add to Gallery
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Script Block -->
+    <script src="admin.js"></script>
+</body>
+</html>
