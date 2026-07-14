@@ -9,8 +9,10 @@ const WHATSAPP_PHONE_NUMBER = "60126398303";
 
 // Initialize Supabase Client if config is available
 let supabase = null;
-if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL !== "") {
+if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL !== "" && typeof window.supabase !== 'undefined') {
     supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+} else {
+    console.warn("Supabase SDK is not loaded or config is empty. Falling back to local storage mode.");
 }
 
 
