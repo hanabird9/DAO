@@ -1,7 +1,6 @@
 import os
 import json
 import requests
-import instaloader
 from datetime import datetime
 
 # Profile to sync
@@ -29,104 +28,121 @@ def main():
     os.makedirs(IMAGE_DIR, exist_ok=True)
     os.makedirs(os.path.dirname(OUTPUT_JSON), exist_ok=True)
 
-    # Initialize Instaloader
-    L = instaloader.Instaloader(
-        download_pictures=False,
-        download_videos=False,
-        download_comments=False,
-        download_geotags=False,
-        save_metadata=False,
-        compress_json=False
-    )
-
-    # Try to log in if credentials are provided in environment
-    username = os.environ.get("INSTAGRAM_USERNAME")
-    password = os.environ.get("INSTAGRAM_PASSWORD")
-
-    logged_in = False
-    if username:
-        try:
-            print(f"Attempting to load session for {username}...")
-            L.load_session_from_file(username)
-            print("Session loaded successfully!")
-            logged_in = True
-        except Exception as e:
-            print(f"Failed to load session from file: {e}")
-
-        if not logged_in and password:
-            try:
-                print(f"Attempting password login as {username}...")
-                L.login(username, password)
-                L.save_session_to_file()
-                print("Password login successful!")
-                logged_in = True
-            except Exception as e:
-                print(f"Password login failed: {e}. Attempting to fetch publicly.")
-    else:
-        print("No credentials found. Fetching publicly.")
-
-    print(f"Loading profile: {INSTAGRAM_PROFILE}...")
-    try:
-        profile = instaloader.Profile.from_username(L.context, INSTAGRAM_PROFILE)
-    except Exception as e:
-        print(f"Failed to load profile {INSTAGRAM_PROFILE}: {e}")
+    session_id = os.environ.get("INSTAGRAM_SESSION_ID")
+    if not session_id:
+        print("Error: INSTAGRAM_SESSION_ID environment variable is missing.")
         return
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Referer": "https://www.instagram.com/"
+    }
+    
+    cookies = {
+        "sessionid": session_id
+    }
+
+    url = f"https://www.instagram.com/{INSTAGRAM_PROFILE}/?__a=1&__d=dis"
+    print(f"Fetching Instagram profile JSON from {url}...")
+    
+    try:
+        response = requests.get(url, headers=headers, cookies=cookies, timeout=20)
+        if response.status_code != 200:
+            print(f"Failed to fetch profile: HTTP {response.status_code}")
+            print(response.text[:500])
+            return
+        
+        data = response.json()
+    except Exception as e:
+        print(f"Error fetching/parsing JSON: {e}")
+        return
+
+    # Instagram formats user data differently depending on the query type
+    user = None
+    if 'graphql' in data:
+        user = data['graphql']['user']
+    elif 'data' in data and 'user' in data['data']:
+        user = data['data']['user']
+    else:
+        user = data.get('user')
+        
+    if not user:
+        print("Could not find user data in response. Keys in response:", list(data.keys()))
+        return
+
+    timeline = user.get('edge_owner_to_timeline_media', {})
+    edges = timeline.get('edges', [])
+    print(f"Found {len(edges)} posts.")
 
     posts_data = []
     active_shortcodes = []
 
-    print("Fetching posts...")
     count = 0
-    for post in profile.get_posts():
+    for edge in edges:
         if count >= MAX_POSTS:
             break
         
-        # Only process image posts or carousel posts (we'll fetch the first slide)
-        if post.is_video:
+        node = edge.get('node', {})
+        if node.get('is_video'):
             continue
 
-        print(f"Processing post {post.shortcode} ({post.date_utc})...")
-        image_filename = f"{post.shortcode}.jpg"
+        shortcode = node.get('shortcode')
+        if not shortcode:
+            continue
+
+        image_url = node.get('display_url')
+        if not image_url:
+            continue
+
+        caption = ""
+        caption_edges = node.get('edge_media_to_caption', {}).get('edges', [])
+        if caption_edges:
+            caption = caption_edges[0].get('node', {}).get('text', "")
+
+        likes = node.get('edge_liked_by', {}).get('count', 0)
+        
+        # taken_at_timestamp is Unix epoch
+        timestamp = node.get('taken_at_timestamp', 0)
+        date_str = datetime.utcfromtimestamp(timestamp).strftime("%Y-%m-%d %H:%M:%S")
+
+        image_filename = f"{shortcode}.jpg"
         image_path = os.path.join(IMAGE_DIR, image_filename)
 
-        # Download the image if it doesn't exist locally
+        # Download image if it doesn't exist
         if not os.path.exists(image_path):
             try:
-                # Use requests to download directly
-                response = requests.get(post.url, stream=True, timeout=15)
-                if response.status_code == 200:
+                img_resp = requests.get(image_url, headers=headers, stream=True, timeout=15)
+                if img_resp.status_code == 200:
                     with open(image_path, 'wb') as f:
-                        for chunk in response.iter_content(1024):
+                        for chunk in img_resp.iter_content(1024):
                             f.write(chunk)
                     print(f"Downloaded image: {image_filename}")
                 else:
-                    print(f"Failed to download image from {post.url}: HTTP {response.status_code}")
+                    print(f"Failed to download image: HTTP {img_resp.status_code}")
                     continue
             except Exception as e:
-                print(f"Error downloading image for {post.shortcode}: {e}")
+                print(f"Error downloading image for {shortcode}: {e}")
                 continue
         else:
             print(f"Image already exists: {image_filename}")
 
-        active_shortcodes.append(post.shortcode)
+        active_shortcodes.append(shortcode)
         
-        # Build JSON item
         posts_data.append({
-            "shortcode": post.shortcode,
-            "url": f"https://www.instagram.com/p/{post.shortcode}/",
+            "shortcode": shortcode,
+            "url": f"https://www.instagram.com/p/{shortcode}/",
             "image_local": f"assets/instagram/{image_filename}",
-            "caption": post.caption or "",
-            "date": post.date_utc.strftime("%Y-%m-%d %H:%M:%S"),
-            "likes": post.likes
+            "caption": caption,
+            "date": date_str,
+            "likes": likes
         })
         count += 1
 
-    # Write posts data to JSON
     with open(OUTPUT_JSON, 'w', encoding='utf-8') as f:
         json.dump(posts_data, f, ensure_ascii=False, indent=2)
     print(f"Successfully wrote {len(posts_data)} posts to {OUTPUT_JSON}")
 
-    # Clean up old images
     clean_old_images(active_shortcodes)
 
 if __name__ == "__main__":

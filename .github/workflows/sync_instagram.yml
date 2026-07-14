@@ -25,25 +25,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install instaloader requests
-
-      - name: Load Instagram Session
-        env:
-          INSTAGRAM_SESSION: ${{ secrets.INSTAGRAM_SESSION }}
-          INSTAGRAM_USERNAME: ${{ secrets.INSTAGRAM_USERNAME }}
-        run: |
-          if [ -n "$INSTAGRAM_SESSION" ]; then
-            mkdir -p ~/.config/instaloader
-            echo "$INSTAGRAM_SESSION" > ~/.config/instaloader/session-${INSTAGRAM_USERNAME}
-            echo "Instagram session loaded successfully."
-          else
-            echo "No session secret found."
-          fi
+          pip install requests
 
       - name: Run Instagram sync script
         env:
-          INSTAGRAM_USERNAME: ${{ secrets.INSTAGRAM_USERNAME }}
-          INSTAGRAM_PASSWORD: ${{ secrets.INSTAGRAM_PASSWORD }}
+          INSTAGRAM_SESSION_ID: ${{ secrets.INSTAGRAM_SESSION_ID }}
         run: python scripts/sync_instagram.py
 
       - name: Commit and push changes
