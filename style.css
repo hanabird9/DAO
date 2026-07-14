@@ -169,13 +169,14 @@ ul {
 
 .btn-primary {
     background-color: var(--color-accent);
-    color: var(--color-text-bright);
+    color: #ffffff; /* White text for readability on red background */
     border: 1px solid var(--color-accent);
 }
 
 .btn-primary:hover {
     background-color: var(--color-accent-hover);
     border-color: var(--color-accent-hover);
+    color: #ffffff; /* Keep text color white on hover */
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(183, 28, 28, 0.4);
 }
