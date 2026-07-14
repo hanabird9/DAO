@@ -57,8 +57,12 @@ def main():
             data = response.json()
         except ValueError as json_err:
             print(f"Response is not valid JSON! Error: {json_err}")
+            print(f"Final URL reached: {response.url}")
+            print(f"Redirect history: {[r.url for r in response.history]}")
+            print(f"Response status code: {response.status_code}")
+            print(f"Response headers: {dict(response.headers)}")
             print("Printing first 1000 characters of response.text:")
-            print(response.text[:1000])
+            print(repr(response.text[:1000]))
             return
     except Exception as e:
         print(f"Error fetching/parsing: {e}")
