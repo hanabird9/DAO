@@ -636,7 +636,7 @@ const MENU_ITEMS = [
         descKo: "달콤한 특제 간장 양념에 버무린 소고기 불고기와 당면, 야채를 자작하게 끓여낸 찌개",
         descEn: "Thinly sliced beef marinated in sweet soy sauce with glass noodles and vegetables.",
         descZh: "在甜沙参酱汁中腌制的切片牛肉，配以粉条和各种蔬菜同煮",
-        image: "assets/menu/so_bulgogi.jpg",
+        image: "assets/menu/so_bulgogi.jfif",
         badge: "",
         serving: "1 Pax",
         spicy: 0
@@ -651,7 +651,7 @@ const MENU_ITEMS = [
         descKo: "특제 양념에 재운 부드러운 돼지불고기와 신선한 버섯, 당면, 야채를 버무린 찌개",
         descEn: "Tender pork marinated in sweet soy sauce with mushrooms and vegetables.",
         descZh: "腌制好的软嫩猪肉与新鲜蘑菇、粉条和蔬菜同煮，汤汁极佳",
-        image: "assets/menu/dwaeji_bulgogi.jpg",
+        image: "assets/menu/dwaeji_bulgogi.avif",
         badge: "",
         serving: "1 Pax",
         spicy: 0
@@ -1087,7 +1087,7 @@ const MENU_ITEMS = [
         descKo: "쫄깃한 오징어와 고소한 돼지 삼겹살을 매콤한 고추장 양념에 볶아낸 최고의 콤비네이션 요리",
         descEn: "Stir-fried pork belly and squid marinated in a spicy Korean chili paste.",
         descZh: "Q弹鱿鱼与香浓五花肉在韩式辣椒酱中同炒的经典鱿鱼五花肉双拼",
-        image: "assets/menu/osam_bulgogi.jpg",
+        image: "assets/menu/osam_bulgogi.avif",
         badge: "",
         serving: "2-3 Pax",
         spicy: 2
@@ -1102,7 +1102,7 @@ const MENU_ITEMS = [
         descKo: "피로 회복에 좋은 신선한 낙지를 매콤한 고추장 양념에 센 불로 불맛 나게 볶아낸 별미 요리",
         descEn: "Small octopus stir-fried in a fiery, spicy Korean chili sauce with vegetables.",
         descZh: "新鲜的小章鱼配以洋葱在极辣的韩式辣酱中猛火爆炒，口感脆嫩鲜辣",
-        image: "assets/menu/nakji_bokkeum.jpg",
+        image: "assets/menu/nakji_bokkeum.avif",
         badge: "",
         serving: "2-3 Pax",
         spicy: 3
@@ -1117,7 +1117,7 @@ const MENU_ITEMS = [
         descKo: "매콤하게 볶아낸 오징어볶음에 잘 삶아진 소면을 비벼 먹는 안주로도 훌륭한 요리",
         descEn: "Stir-fried squid in a spicy Korean chili sauce served with boiled wheat noodles.",
         descZh: "香辣可口的辣炒鱿鱼配以水煮小麦细面，是极佳的下酒菜和下饭菜",
-        image: "assets/menu/ojingeo_somyeon.jpg",
+        image: "assets/menu/ojingeo_somyeon.avif",
         badge: "",
         serving: "2-3 Pax",
         spicy: 2
@@ -1132,7 +1132,7 @@ const MENU_ITEMS = [
         descKo: "도톰한 돼지 앞다리살 또는 오겹살을 대파, 양파와 함께 매콤한 특제 고추장 소스에 철판에서 볶아낸 요리",
         descEn: "Stir-fried sliced pork belly and vegetables in a spicy Korean chili paste.",
         descZh: "切片五花肉与新鲜蔬菜在韩式辣椒酱中铁板翻炒而成的辣炒猪肉",
-        image: "assets/menu/jeyuk_bokkeum.jpg",
+        image: "assets/menu/jeyuk_bokkeum.avif",
         badge: "",
         serving: "2-3 Pax",
         spicy: 2
@@ -1147,7 +1147,7 @@ const MENU_ITEMS = [
         descKo: "잘 익은 신김치를 송송 썰어 밀가루 반죽에 섞어 기름을 두르고 노릇하고 바삭하게 구워낸 전",
         descEn: "Savory pancake made with finely chopped sour kimchi and vegetables, pan-fried to crispy perfection.",
         descZh: "将酸熟泡菜切碎拌入面糊中，在煎锅中煎至金黄酥脆的经典韩国泡菜饼",
-        image: "assets/menu/kimchi_jeon.jpg",
+        image: "assets/menu/kimchi_jeon.avif",
         badge: "",
         serving: "1-2 Pax",
         spicy: 1
@@ -1162,7 +1162,7 @@ const MENU_ITEMS = [
         descKo: "향긋한 쪽파와 오징어, 새우, 조개 등 모듬 해물을 아낌없이 넣어 두툼하고 고소하게 지진 해물전",
         descEn: "Savory Korean pancake packed with green onions and assorted seafood, pan-fried.",
         descZh: "加入大量香葱和鱿鱼、虾仁等海鲜面糊煎制的厚实香浓海鲜葱饼",
-        image: "assets/menu/haemul_pajeon.jpg",
+        image: "assets/menu/haemul_pajeon.avif",
         badge: "",
         serving: "2-3 Pax",
         spicy: 0
@@ -1177,7 +1177,7 @@ const MENU_ITEMS = [
         descKo: "몸에 좋은 신선한 영양 부추를 가득 썰어 반죽해 고소하고 얇게 구워낸 바삭한 부추전",
         descEn: "Crispy, savory pancake made with fresh green chives and chili peppers.",
         descZh: "加入新鲜健康韭菜糊煎制的薄脆韭菜饼",
-        image: "assets/menu/buchu_jeon.jpg",
+        image: "assets/menu/buchu_jeon.avif",
         badge: "",
         serving: "1-2 Pax",
         spicy: 0
@@ -1192,7 +1192,7 @@ const MENU_ITEMS = [
         descKo: "말랑한 쌀떡과 사각 어묵, 양배추를 매콤달콤한 고추장 베이스 소스에 조려낸 한국 대표 길거리 음식",
         descEn: "Chewy rice cakes and fish cakes simmered in a sweet and spicy red chili sauce.",
         descZh: "软糯年糕条与鱼饼、卷心菜一起在特制甜辣酱中熬煮的韩国第一街头小吃",
-        image: "assets/menu/tteokbokki.jpg",
+        image: "assets/menu/tteokbokki.avif",
         badge: "",
         serving: "1-2 Pax",
         spicy: 1
@@ -1207,7 +1207,7 @@ const MENU_ITEMS = [
         descKo: "삶은 당면에 시금치, 당근, 버섯, 양파, 소고기 등의 오색 고명을 얹고 참기름과 간장 양념으로 버무린 요리",
         descEn: "Korean sweet potato glass noodles stir-fried with colorful vegetables, mushrooms, and beef.",
         descZh: "红薯淀粉粉丝与菠菜、胡萝卜、蘑菇和牛肉丝一起淋上香油和酱油翻炒的杂菜",
-        image: "assets/menu/japchae.jpg",
+        image: "assets/menu/japchae.avif",
         badge: "",
         serving: "1-2 Pax",
         spicy: 0
@@ -1222,7 +1222,7 @@ const MENU_ITEMS = [
         descKo: "돼지 오겹살을 한방 재료와 삶아내어 매콤한 보쌈김치, 무속과 함께 상추에 싸 먹는 수육 요리",
         descEn: "Tender, simmered pork belly sliced and served with spicy radish salad and salted cabbage leaves.",
         descZh: "选用优质猪五花肉配以韩方药材煮熟切片，配以秘制萝卜泡菜包食的白切肉",
-        image: "assets/menu/bossam.jpg",
+        image: "assets/menu/bossam.avif",
         badge: "",
         serving: "2-3 Pax",
         spicy: 1
