@@ -446,6 +446,71 @@ document.addEventListener("DOMContentLoaded", () => {
             closeMenuModal();
         }
     });
+
+    // 6. Fetch and Render Instagram Feed
+    const instagramGrid = document.getElementById("instagram-grid");
+    
+    async function loadInstagramFeed() {
+        if (!instagramGrid) return;
+        
+        try {
+            const response = await fetch("data/instagram_posts.json?v=" + new Date().getTime());
+            if (!response.ok) {
+                throw new Error("Failed to load instagram posts");
+            }
+            
+            const posts = await response.json();
+            if (!posts || posts.length === 0) {
+                instagramGrid.innerHTML = '<div class="instagram-placeholder">Follow us @daorae_jb on Instagram to see our posts!</div>';
+                return;
+            }
+            
+            instagramGrid.innerHTML = "";
+            posts.forEach(post => {
+                const item = document.createElement("a");
+                item.className = "instagram-item reveal active";
+                item.href = post.url;
+                item.target = "_blank";
+                item.rel = "noopener noreferrer";
+                
+                const shortCaption = post.caption.length > 80 
+                    ? post.caption.substring(0, 77) + "..." 
+                    : post.caption;
+                
+                item.innerHTML = `
+                    <img src="${post.image_local}" alt="Instagram Post" loading="lazy">
+                    <div class="instagram-overlay">
+                        <div class="instagram-overlay-icon">
+                            <i data-lucide="instagram" style="width: 24px; height: 24px;"></i>
+                        </div>
+                        <p class="instagram-overlay-caption">${escapeHtml(shortCaption)}</p>
+                        <div class="instagram-overlay-likes">
+                            <i data-lucide="heart" style="width: 14px; height: 14px; fill: currentColor;"></i>
+                            <span>${post.likes || 0}</span>
+                        </div>
+                    </div>
+                `;
+                instagramGrid.appendChild(item);
+            });
+            
+            lucide.createIcons();
+            
+        } catch (error) {
+            console.error("Error loading Instagram feed:", error);
+            instagramGrid.innerHTML = '<div class="instagram-placeholder">Follow us @daorae_jb on Instagram to see our posts!</div>';
+        }
+    }
+
+    function escapeHtml(unsafe) {
+        return unsafe
+             .replace(/&/g, "&amp;")
+             .replace(/</g, "&lt;")
+             .replace(/>/g, "&gt;")
+             .replace(/"/g, "&quot;")
+             .replace(/'/g, "&#039;");
+    }
+    
+    loadInstagramFeed();
 });
 
 
