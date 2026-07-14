@@ -29,7 +29,7 @@ jobs:
 
       - name: Run Instagram sync script
         env:
-          INSTAGRAM_SESSION_ID: ${{ secrets.INSTAGRAM_SESSION_ID }}
+          BEHOLD_FEED_URL: ${{ secrets.BEHOLD_FEED_URL }}
         run: python scripts/sync_instagram.py
 
       - name: Commit and push changes

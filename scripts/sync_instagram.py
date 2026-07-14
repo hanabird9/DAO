@@ -4,7 +4,6 @@ import requests
 from datetime import datetime
 
 # Profile to sync
-INSTAGRAM_PROFILE = "daorae_jb"
 MAX_POSTS = 8
 OUTPUT_JSON = "data/instagram_posts.json"
 IMAGE_DIR = "assets/instagram"
@@ -28,101 +27,89 @@ def main():
     os.makedirs(IMAGE_DIR, exist_ok=True)
     os.makedirs(os.path.dirname(OUTPUT_JSON), exist_ok=True)
 
-    session_id = os.environ.get("INSTAGRAM_SESSION_ID")
-    if not session_id:
-        print("Error: INSTAGRAM_SESSION_ID environment variable is missing.")
+    feed_url = os.environ.get("BEHOLD_FEED_URL")
+    if not feed_url:
+        print("Error: BEHOLD_FEED_URL environment variable is missing.")
         return
 
+    print(f"Fetching Instagram posts from Behold API: {feed_url}...")
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Referer": "https://www.instagram.com/"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
     }
-    
-    session = requests.Session()
-    
-    # Establish base cookies from homepage first (mid, ig_did, csrftoken, etc.)
-    print("Establishing base cookies from Instagram homepage...")
-    try:
-        session.get("https://www.instagram.com/", headers=headers, timeout=15)
-    except Exception as e:
-        print(f"Warning: Failed to fetch homepage for cookies: {e}")
 
-    # Set session ID cookie
-    session.cookies.set("sessionid", session_id, domain=".instagram.com")
-
-    url = f"https://www.instagram.com/{INSTAGRAM_PROFILE}/?__a=1&__d=dis"
-    print(f"Fetching Instagram profile JSON from {url}...")
-    
     try:
-        response = session.get(url, headers=headers, timeout=20)
+        response = requests.get(feed_url, headers=headers, timeout=20)
         if not (200 <= response.status_code < 300):
-            print(f"Failed to fetch profile: HTTP {response.status_code}")
-            print(response.text[:500])
+            print(f"Failed to fetch Behold feed: HTTP {response.status_code}")
             return
         
-        try:
-            data = response.json()
-        except ValueError as json_err:
-            print(f"Response is not valid JSON! Error: {json_err}")
-            print(f"Final URL reached: {response.url}")
-            print(f"Redirect history: {[r.url for r in response.history]}")
-            print(f"Response status code: {response.status_code}")
-            print(f"Response headers: {dict(response.headers)}")
-            print("Printing first 1000 characters of response.text:")
-            print(repr(response.text[:1000]))
-            return
+        data = response.json()
     except Exception as e:
-        print(f"Error fetching/parsing: {e}")
+        print(f"Error fetching/parsing Behold JSON: {e}")
         return
 
-    # Instagram formats user data differently depending on the query type
-    user = None
-    if 'graphql' in data:
-        user = data['graphql']['user']
-    elif 'data' in data and 'user' in data['data']:
-        user = data['data']['user']
-    else:
-        user = data.get('user')
+    # Behold feed response could be an array of posts or an object containing a 'posts' array
+    posts = []
+    if isinstance(data, list):
+        posts = data
+    elif isinstance(data, dict):
+        posts = data.get('posts', [])
         
-    if not user:
-        print("Could not find user data in response. Keys in response:", list(data.keys()))
-        return
-
-    timeline = user.get('edge_owner_to_timeline_media', {})
-    edges = timeline.get('edges', [])
-    print(f"Found {len(edges)} posts.")
+    print(f"Found {len(posts)} posts in Behold feed.")
 
     posts_data = []
     active_shortcodes = []
 
     count = 0
-    for edge in edges:
+    for post in posts:
         if count >= MAX_POSTS:
             break
         
-        node = edge.get('node', {})
-        if node.get('is_video'):
+        media_type = post.get('mediaType') or post.get('media_type', 'IMAGE')
+        # Skip videos if they don't have a static image preview
+        if media_type == 'VIDEO' and not (post.get('thumbnailUrl') or post.get('thumbnail_url')):
             continue
 
-        shortcode = node.get('shortcode')
-        if not shortcode:
-            continue
-
-        image_url = node.get('display_url')
+        # Get image URL (standard image or thumbnail)
+        image_url = post.get('mediaUrl') or post.get('media_url') or post.get('thumbnailUrl') or post.get('thumbnail_url')
         if not image_url:
             continue
 
-        caption = ""
-        caption_edges = node.get('edge_media_to_caption', {}).get('edges', [])
-        if caption_edges:
-            caption = caption_edges[0].get('node', {}).get('text', "")
+        permalink = post.get('permalink')
+        if not permalink:
+            continue
 
-        likes = node.get('edge_liked_by', {}).get('count', 0)
-        
-        # taken_at_timestamp is Unix epoch
-        timestamp = node.get('taken_at_timestamp', 0)
-        date_str = datetime.utcfromtimestamp(timestamp).strftime("%Y-%m-%d %H:%M:%S")
+        # Extract shortcode from permalink (e.g. https://www.instagram.com/p/Ct7_zrgB6yS/ -> Ct7_zrgB6yS)
+        shortcode = ""
+        parts = permalink.strip('/').split('/')
+        if 'p' in parts:
+            idx = parts.index('p')
+            if idx + 1 < len(parts):
+                shortcode = parts[idx + 1]
+        elif 'reel' in parts:
+            idx = parts.index('reel')
+            if idx + 1 < len(parts):
+                shortcode = parts[idx + 1]
+
+        if not shortcode:
+            shortcode = post.get('id', f"post_{count}")
+
+        caption = post.get('caption', '')
+        likes = post.get('likes') or post.get('likeCount') or post.get('like_count') or 0
+
+        # Parse timestamp (e.g. 2023-07-15T00:00:00+00:00)
+        timestamp_str = post.get('timestamp')
+        date_str = ""
+        if timestamp_str:
+            try:
+                # Replace timezone Z or +00:00 for parsing in older python versions if needed
+                t_str = timestamp_str.split('+')[0].replace('Z', '')
+                dt = datetime.fromisoformat(t_str)
+                date_str = dt.strftime("%Y-%m-%d %H:%M:%S")
+            except Exception:
+                date_str = timestamp_str[:19].replace('T', ' ')
+        else:
+            date_str = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 
         image_filename = f"{shortcode}.jpg"
         image_path = os.path.join(IMAGE_DIR, image_filename)
@@ -149,7 +136,7 @@ def main():
         
         posts_data.append({
             "shortcode": shortcode,
-            "url": f"https://www.instagram.com/p/{shortcode}/",
+            "url": permalink,
             "image_local": f"assets/instagram/{image_filename}",
             "caption": caption,
             "date": date_str,
