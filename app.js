@@ -246,17 +246,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem("daorae_reservations", JSON.stringify(reservations));
             }
             
-            // 2. Format WhatsApp Message
-            let message = `Hello Daorae Korean BBQ Bukit Indah! ?삃\n\n`;
+            // 2. Format WhatsApp Message with correct Unicode emojis (proper UTF-8 encoding)
+            let message = `Hello Daorae Korean BBQ Bukit Indah! 👋\n\n`;
             message += `I would like to make a table reservation:\n`;
-            message += `?뱦Name: ${name}\n`;
-            message += `?뱸Phone: ${phone}\n`;
-            message += `?뱟Date: ${date}\n`;
-            message += `?캴ime: ${time}\n`;
-            message += `?뫁Guests: ${pax} pax\n`;
+            message += `👤 Name: ${name}\n`;
+            message += `📞 Phone: ${phone}\n`;
+            message += `📅 Date: ${date}\n`;
+            message += `⏰ Time: ${time}\n`;
+            message += `👥 Guests: ${pax} pax\n`;
             
             if (remarks) {
-                message += `?뮠Special Requests: ${remarks}\n`;
+                message += `💬 Special Requests: ${remarks}\n`;
             }
             
             message += `\nThank you! Please confirm if a table is available.`;
@@ -270,7 +270,101 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // Clear form
             resForm.reset();
+            
+            // Reset time slots since form is reset
+            if (timeSelect) {
+                timeSelect.innerHTML = '<option value="" disabled selected>Select Time Slot</option>';
+            }
         });
+    }
+
+    // Dynamic Time Slot Selection based on date & holiday status
+    const dateInput = document.getElementById("res-date");
+    const holidayCheckbox = document.getElementById("res-holiday");
+    const timeSelect = document.getElementById("res-time");
+
+    function updateTimeOptions() {
+        if (!dateInput || !timeSelect) return;
+        
+        const dateValue = dateInput.value;
+        if (!dateValue) return;
+
+        const selectedDate = new Date(dateValue);
+        const dayOfWeek = selectedDate.getDay(); // 0 is Sunday, 6 is Saturday
+        const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
+        const isHoliday = holidayCheckbox ? holidayCheckbox.checked : false;
+        
+        const currentValue = timeSelect.value;
+        timeSelect.innerHTML = "";
+        
+        const defaultOpt = document.createElement("option");
+        defaultOpt.value = "";
+        defaultOpt.disabled = true;
+        defaultOpt.selected = !currentValue;
+        defaultOpt.textContent = "Select Time Slot";
+        timeSelect.appendChild(defaultOpt);
+
+        if (isWeekend || isHoliday) {
+            // Weekend/Holiday continuous hours: 11:30 AM - 10:00 PM (no break)
+            const group = document.createElement("optgroup");
+            group.label = "Continuous Business Hours (No Break)";
+            
+            const times = [
+                "11:30 AM", "12:00 PM", "12:30 PM", "01:00 PM", "01:30 PM", "02:00 PM",
+                "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM", "04:30 PM", "05:00 PM",
+                "05:30 PM", "06:00 PM", "06:30 PM", "07:00 PM", "07:30 PM", "08:00 PM",
+                "08:30 PM", "09:00 PM", "09:30 PM", "10:00 PM"
+            ];
+            
+            times.forEach(t => {
+                const opt = document.createElement("option");
+                opt.value = t;
+                opt.textContent = t;
+                if (t === currentValue) opt.selected = true;
+                group.appendChild(opt);
+            });
+            timeSelect.appendChild(group);
+        } else {
+            // Weekday split: Lunch and Dinner
+            const lunchGroup = document.createElement("optgroup");
+            lunchGroup.label = "Lunch Hours";
+            const lunchTimes = ["11:30 AM", "12:00 PM", "12:30 PM", "01:00 PM", "01:30 PM", "02:00 PM"];
+            lunchTimes.forEach(t => {
+                const opt = document.createElement("option");
+                opt.value = t;
+                opt.textContent = t;
+                if (t === currentValue) opt.selected = true;
+                lunchGroup.appendChild(opt);
+            });
+            timeSelect.appendChild(lunchGroup);
+
+            const dinnerGroup = document.createElement("optgroup");
+            dinnerGroup.label = "Dinner Hours";
+            const dinnerTimes = [
+                "05:30 PM", "06:00 PM", "06:30 PM", "07:00 PM",
+                "07:30 PM", "08:00 PM", "08:30 PM", "09:00 PM",
+                "09:30 PM", "10:00 PM"
+            ];
+            dinnerTimes.forEach(t => {
+                const opt = document.createElement("option");
+                opt.value = t;
+                opt.textContent = t;
+                if (t === currentValue) opt.selected = true;
+                dinnerGroup.appendChild(opt);
+            });
+            timeSelect.appendChild(dinnerGroup);
+        }
+    }
+
+    if (dateInput && timeSelect) {
+        // Set minimum date to today
+        const todayStr = new Date().toISOString().split("T")[0];
+        dateInput.min = todayStr;
+
+        dateInput.addEventListener("change", updateTimeOptions);
+        if (holidayCheckbox) {
+            holidayCheckbox.addEventListener("change", updateTimeOptions);
+        }
     }
 
     // 6. Dynamic Gallery Logic
