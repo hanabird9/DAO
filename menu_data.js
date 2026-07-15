@@ -536,7 +536,7 @@ const MENU_ITEMS = [
         id: "other-bbq-29-b",
         category: "other-bbq",
         nameKo: "M06. 장어구이",
-        nameEn: "Jangeo Gui (Salt / Soy Sauce)",
+        nameEn: "Jangeo Gui",
         nameZh: "烤鳗鱼",
         price: "1pc RM 125 / 2pcs RM 235",
         descKo: "소금구이 또는 간장 양념구이로 선택 가능한 신선한 보양 민물장어 구이",

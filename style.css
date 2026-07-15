@@ -642,6 +642,7 @@ ul {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    flex: 1;
 }
 
 .menu-title-ko {
@@ -652,9 +653,10 @@ ul {
 }
 
 .menu-title-en {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--color-text-bright);
+    line-height: 1.2;
 }
 
 .menu-title-zh {
