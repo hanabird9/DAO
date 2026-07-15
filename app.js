@@ -560,7 +560,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             
             instagramGrid.innerHTML = "";
-            posts.forEach(post => {
+            posts.slice(0, 4).forEach(post => {
                 const item = document.createElement("a");
                 item.className = "instagram-item reveal active";
                 item.href = post.url;

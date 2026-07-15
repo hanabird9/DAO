@@ -4,7 +4,7 @@ import requests
 from datetime import datetime
 
 # Profile to sync
-MAX_POSTS = 8
+MAX_POSTS = 4
 OUTPUT_JSON = "data/instagram_posts.json"
 IMAGE_DIR = "assets/instagram"
 
