@@ -36,37 +36,45 @@
        ========================================================================== -->
     <div id="dashboard-container" class="dashboard-wrapper" style="display: none;">
         <!-- Sidebar Navigation -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="admin-sidebar">
             <div class="sidebar-brand">
                 <img src="assets/logo.png" alt="Daorae Logo">
             </div>
             
             <nav class="sidebar-menu">
                 <button class="nav-item active" data-tab="tab-overview">
-                    <i data-lucide="layout-dashboard"></i> Overview
+                    <i data-lucide="layout-dashboard"></i> <span>Overview</span>
                 </button>
                 <button class="nav-item" data-tab="tab-reservations">
-                    <i data-lucide="calendar"></i> Reservations
+                    <i data-lucide="calendar"></i> <span>Reservations</span>
                 </button>
                 <button class="nav-item" data-tab="tab-gallery">
-                    <i data-lucide="image"></i> Gallery Manager
+                    <i data-lucide="image"></i> <span>Gallery Manager</span>
                 </button>
             </nav>
             
             <div class="sidebar-footer">
                 <button id="logout-btn" class="btn-logout">
-                    <i data-lucide="log-out"></i> Sign Out
+                    <i data-lucide="log-out"></i> <span>Sign Out</span>
                 </button>
             </div>
         </aside>
+
+        <!-- Mobile Overlay Backdrop -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
         <!-- Main Workspace -->
         <main class="main-content">
             <!-- Header bar -->
             <header class="content-header">
-                <div class="header-title-area">
-                    <h1 id="page-title">Dashboard Overview</h1>
-                    <p class="current-date" id="current-date-str"></p>
+                <div class="header-left-area">
+                    <button class="mobile-menu-btn" id="mobile-menu-btn">
+                        <i data-lucide="menu"></i>
+                    </button>
+                    <div class="header-title-area">
+                        <h1 id="page-title">Dashboard Overview</h1>
+                        <p class="current-date" id="current-date-str"></p>
+                    </div>
                 </div>
                 <div class="header-actions">
                     <a href="index.html" target="_blank" class="btn btn-outline">

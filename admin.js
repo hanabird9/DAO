@@ -83,6 +83,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const tabName = item.textContent.trim();
             pageTitle.textContent = tabName === "Overview" ? "Dashboard Overview" : tabName;
             
+            // Close mobile sidebar on nav click
+            closeMobileSidebar();
+            
             // Refresh data on switch
             if (targetTab === "tab-overview") {
                 await loadMetrics();
@@ -94,6 +97,30 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+
+    // Mobile Sidebar Toggle Logic
+    const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+    const adminSidebar = document.getElementById("admin-sidebar");
+    const sidebarOverlay = document.getElementById("sidebar-overlay");
+
+    function openMobileSidebar() {
+        if (adminSidebar) adminSidebar.classList.add("open");
+        if (sidebarOverlay) sidebarOverlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeMobileSidebar() {
+        if (adminSidebar) adminSidebar.classList.remove("open");
+        if (sidebarOverlay) sidebarOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+    }
+
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener("click", openMobileSidebar);
+    }
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener("click", closeMobileSidebar);
+    }
 
     // Overview link redirection helpers
     document.getElementById("view-all-res-link").addEventListener("click", () => {
@@ -193,14 +220,14 @@ document.addEventListener("DOMContentLoaded", () => {
         recent.forEach(res => {
             const tr = document.createElement("tr");
             tr.innerHTML = `
-                <td><strong>${escapeHtml(res.name)}</strong><br><span style="font-size:0.8rem; color:var(--color-text-muted); font-weight:500;">${res.phone ? escapeHtml(res.phone) : 'N/A'}</span></td>
-                <td>${res.date} <span style="color: var(--color-text-muted); font-size:0.8rem;">at ${res.time}</span></td>
-                <td>${res.pax} Pax</td>
-                <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                <td data-label="Name"><strong>${escapeHtml(res.name)}</strong><br><span style="font-size:0.8rem; color:var(--color-text-muted); font-weight:500;">${res.phone ? escapeHtml(res.phone) : 'N/A'}</span></td>
+                <td data-label="Date / Time">${res.date} <span style="color: var(--color-text-muted); font-size:0.8rem;">at ${res.time}</span></td>
+                <td data-label="Guests">${res.pax} Pax</td>
+                <td data-label="Requests" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                     ${res.remarks ? escapeHtml(res.remarks) : '<span style="color: var(--color-text-muted); font-style:italic;">None</span>'}
                 </td>
-                <td><span class="badge badge-${res.status.toLowerCase()}">${res.status}</span></td>
-                <td>
+                <td data-label="Status"><span class="badge badge-${res.status.toLowerCase()}">${res.status}</span></td>
+                <td data-label="">
                     <div class="action-btn-group">
                         ${res.status === 'Pending' ? `
                             <button class="btn-icon confirm" onclick="updateReservationStatus('${res.id}', 'Confirmed')" title="Confirm Reservation">
@@ -256,13 +283,13 @@ document.addEventListener("DOMContentLoaded", () => {
         reservations.forEach(res => {
             const tr = document.createElement("tr");
             tr.innerHTML = `
-                <td><strong>${escapeHtml(res.name)}</strong><br><span style="font-size:0.8rem; color:var(--color-text-muted); font-weight:500;">${res.phone ? escapeHtml(res.phone) : 'N/A'}</span></td>
-                <td>${res.date}</td>
-                <td>${res.time}</td>
-                <td>${res.pax} Pax</td>
-                <td>${res.remarks ? escapeHtml(res.remarks) : '<span style="color: var(--color-text-muted); font-style:italic;">None</span>'}</td>
-                <td><span class="badge badge-${res.status.toLowerCase()}">${res.status}</span></td>
-                <td>
+                <td data-label="Name"><strong>${escapeHtml(res.name)}</strong><br><span style="font-size:0.8rem; color:var(--color-text-muted); font-weight:500;">${res.phone ? escapeHtml(res.phone) : 'N/A'}</span></td>
+                <td data-label="Date">${res.date}</td>
+                <td data-label="Time">${res.time}</td>
+                <td data-label="Guests">${res.pax} Pax</td>
+                <td data-label="Requests">${res.remarks ? escapeHtml(res.remarks) : '<span style="color: var(--color-text-muted); font-style:italic;">None</span>'}</td>
+                <td data-label="Status"><span class="badge badge-${res.status.toLowerCase()}">${res.status}</span></td>
+                <td data-label="">
                     <div class="action-btn-group">
                         ${res.status === 'Pending' ? `
                             <button class="btn-icon confirm" onclick="updateReservationStatus('${res.id}', 'Confirmed')" title="Confirm Reservation">
