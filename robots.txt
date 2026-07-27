@@ -1,0 +1,10 @@
+# Daorae Korean BBQ - Bukit Indah
+# https://www.daorae.net
+
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /config.js
+Disallow: /scripts/
+
+Sitemap: https://www.daorae.net/sitemap.xml
