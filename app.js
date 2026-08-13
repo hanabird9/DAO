@@ -80,10 +80,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Render Menu items dynamically
     const menuGrid = document.querySelector(".menu-grid");
+    const loadMoreBtnContainer = document.getElementById("menuLoadMoreContainer");
+    const loadMoreBtn = document.getElementById("loadMoreMenuBtn");
     
-    function renderMenu(items) {
+    let currentFilteredItems = [];
+    let renderedItemsCount = 0;
+    const ITEMS_PER_PAGE = 12;
+    
+    function renderMenu(items, append = false) {
         if (!menuGrid) return;
-        menuGrid.innerHTML = "";
+        if (!append) {
+            menuGrid.innerHTML = "";
+        }
         
         items.forEach(item => {
             // Generate spicy pepper icons
@@ -101,16 +109,16 @@ document.addEventListener("DOMContentLoaded", () => {
             card.setAttribute("data-id", item.id);
             card.style.cursor = "pointer"; // Indicating clickable card
             card.innerHTML = `
-                <div class="menu-card-img-wrapper">
-                    <img src="${item.image}" alt="${item.nameEn}" loading="lazy">
+                <div class="menu-card-img-wrapper" style="aspect-ratio: 3/2; overflow: hidden; background-color: var(--color-bg-deep);">
+                    <img src="${item.image}" alt="${item.nameEn}" loading="lazy" width="300" height="200" style="width: 100%; height: 100%; object-fit: cover;">
                     ${item.badge ? `<span class="menu-card-badge">${item.badge}</span>` : ''}
                 </div>
                 <div class="menu-card-content">
                     <div class="menu-card-title-row">
                         <div class="menu-titles">
-                            <span class="menu-title-ko">${item.nameKo}</span>
-                            <h3 class="menu-title-en">${item.nameEn}</h3>
-                            <span class="menu-title-zh">${item.nameZh}</span>
+                          <span class="menu-title-ko">${item.nameKo}</span>
+                          <h3 class="menu-title-en">${item.nameEn}</h3>
+                          <span class="menu-title-zh">${item.nameZh}</span>
                         </div>
                         <span class="menu-price">${item.price}</span>
                     </div>
@@ -132,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Refresh icons and add active class to visible cards for smooth presentation
         lucide.createIcons();
         setTimeout(() => {
-            const cards = menuGrid.querySelectorAll(".menu-card");
+            const cards = menuGrid.querySelectorAll(".menu-card:not(.active)");
             cards.forEach(card => card.classList.add("active"));
         }, 50);
     }
@@ -155,8 +163,35 @@ document.addEventListener("DOMContentLoaded", () => {
         return unique;
     }
     
-    // Initial menu rendering
-    renderMenu(getUniqueItems(MENU_ITEMS));
+    // Helper to load a chunk of menu items
+    function loadMenuChunk(init = false) {
+        if (init) {
+            renderedItemsCount = 0;
+        }
+        
+        const nextChunk = currentFilteredItems.slice(renderedItemsCount, renderedItemsCount + ITEMS_PER_PAGE);
+        renderMenu(nextChunk, !init);
+        renderedItemsCount += nextChunk.length;
+        
+        // Show/hide load more button
+        if (loadMoreBtnContainer) {
+            if (renderedItemsCount < currentFilteredItems.length) {
+                loadMoreBtnContainer.style.display = "block";
+            } else {
+                loadMoreBtnContainer.style.display = "none";
+            }
+        }
+    }
+    
+    // Initial menu rendering setup
+    currentFilteredItems = getUniqueItems(MENU_ITEMS);
+    loadMenuChunk(true);
+
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener("click", () => {
+            loadMenuChunk(false);
+        });
+    }
 
     // 4. Menu Filtering Logic
     const filterButtons = document.querySelectorAll(".filter-btn");
@@ -178,11 +213,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 setTimeout(() => {
                     if (category === "all") {
-                        renderMenu(getUniqueItems(MENU_ITEMS));
+                        currentFilteredItems = getUniqueItems(MENU_ITEMS);
                     } else {
-                        const filtered = MENU_ITEMS.filter(item => item.category === category);
-                        renderMenu(filtered);
+                        currentFilteredItems = MENU_ITEMS.filter(item => item.category === category);
                     }
+                    loadMenuChunk(true);
                 }, 300);
             }
         });

@@ -16,7 +16,7 @@ const MENU_ITEMS = [
         descKo: "매콤한 양념 쭈꾸미와 부드러운 우삼겹, 그리고 아삭한 콩나물 등 신선한 채소를 철판에서 매콤하게 볶아낸 별미 요리",
         descEn: "Stir-fried spicy webfoot octopus with thinly sliced beef short plate and assorted fresh vegetables.",
         descZh: "Q弹香辣小八爪鱼与薄切牛五花肉及新鲜蔬菜（如豆芽）同炒的美味料理",
-        image: "assets/menu/jb01.png",
+        image: "assets/menu/jb01.webp",
         badge: "Johor Only",
         serving: "2-3 Pax",
         spicy: 2
@@ -31,7 +31,7 @@ const MENU_ITEMS = [
         descKo: "부드럽고 촉촉하게 삶아낸 돼지 보쌈 수육과 매콤하고 쫄깃하게 볶아낸 불맛 낙지볶음을 함께 곁들여 먹는 고급 별미",
         descEn: "Tender and juicy boiled pork slices served alongside flavorful, fiery stir-fried octopus.",
         descZh: "软嫩多汁的清蒸猪五花肉（白切肉）配以香辣劲道爆炒章鱼的经典双拼",
-        image: "assets/menu/jb02.png",
+        image: "assets/menu/jb02.webp",
         badge: "Johor Only",
         serving: "2-3 Pax",
         spicy: 2
@@ -46,7 +46,7 @@ const MENU_ITEMS = [
         descKo: "살코기가 푸짐한 돼지 등뼈와 감자, 시래기, 들깨가루를 듬뿍 넣어 얼큰하고 구수하게 끓여낸 대표 한국식 해장 전골",
         descEn: "Rich and spicy hot pot stew made with tender pork neck bones, whole potatoes, and wild sesame powder.",
         descZh: "精选带肉猪脊骨与整块土豆、干白菜和苏子粉同熬的香辣浓郁土豆猪骨汤",
-        image: "assets/menu/jb03.png",
+        image: "assets/menu/jb03.webp",
         badge: "Johor Only",
         serving: "2-3 Pax",
         spicy: 1
@@ -61,7 +61,7 @@ const MENU_ITEMS = [
         descKo: "부드러운 돼지 목뼈 살코기와 우거지를 넣고 매콤하고 깊은 육수로 끓여낸 1인용 뼈다귀 해장국",
         descEn: "Hearty individual portion of deeply flavorful, spicy pork neck bone soup with vegetables.",
         descZh: "热气腾腾的单人份浓郁香辣猪颈骨汤，配以蔬菜和干白菜",
-        image: "assets/menu/jb04.png",
+        image: "assets/menu/jb04.webp",
         badge: "Johor Only",
         serving: "1 Pax",
         spicy: 1
@@ -76,7 +76,7 @@ const MENU_ITEMS = [
         descKo: "신선한 해산물과 야채를 센 불에 볶아 불맛을 내고 매콤하고 시원하게 끓여낸 한국식 짬뽕 (밥 또는 면 선택 가능)",
         descEn: "Fiery and refreshing Korean-Chinese style noodle soup loaded with assorted fresh seafood and crisp vegetables.",
         descZh: "新鲜海鲜与爽脆蔬菜猛火爆炒，浇上香辣清爽高汤的韩式海鲜面（可选配米饭或面条）",
-        image: "assets/menu/jb05.png",
+        image: "assets/menu/jb05.webp",
         badge: "Johor Only",
         serving: "1 Pax",
         spicy: 2
@@ -512,7 +512,7 @@ const MENU_ITEMS = [
         descKo: "신선하고 통통한 오징어에 칼집을 내어 다오래 특제 고추장 매운 소스를 곁들여 석쇠에 구운 요리",
         descEn: "Fresh squid carved and prepared in our hot chili sauce",
         descZh: "经特制辣酱调味烤制的新鲜鱿鱼",
-        image: "assets/menu/yangnyeom_ojingeo_gui.png",
+        image: "assets/menu/yangnyeom_ojingeo_gui.webp",
         badge: "",
         serving: "200g",
         spicy: 2
@@ -899,7 +899,7 @@ const MENU_ITEMS = [
         descKo: "한식 잔치 요리인 당면 잡채와 밥을 함께 센 불에 볶아낸 쫄깃하고 고소한 잡채 볶음밥",
         descEn: "Korean glass noodle (Japchae) and rice pan fried with assorted seasoned vegetables.",
         descZh: "韩式杂菜（红薯淀粉粉丝）与各类调味蔬菜 and 米饭同炒的杂菜炒饭",
-        image: "assets/menu/japchae_bokkeumbap.png",
+        image: "assets/menu/japchae_bokkeumbap.webp",
         badge: "",
         serving: "1 Pax",
         spicy: 0
@@ -1241,7 +1241,7 @@ const MENU_ITEMS = [
         descKo: "매콤한 제육볶음(돼지 삼겹살)과 갓 지은 밥, 정갈한 밑반찬이 한데 담긴 든든한 점심 도시락",
         descEn: "Stir-fried sliced pork belly in a spicy chili marinade, served with steamed rice and side dishes.",
         descZh: "辣炒五花肉与白米饭及精选韩式小菜搭配的韩式工作便当",
-        image: "assets/menu/jeyuk_bokkeum_dosilak.png",
+        image: "assets/menu/jeyuk_bokkeum_dosilak.webp",
         badge: "",
         serving: "1 Pax",
         spicy: 1
@@ -1256,7 +1256,7 @@ const MENU_ITEMS = [
         descKo: "불고기, 밥, 반찬이 어우러진 알찬 소불고기 도시락",
         descEn: "Slices of prime beef simmered in its own juices and a special soya sauce broth served in a lunchbox.",
         descZh: "包含烤牛肉、米饭及各式配菜的韩式烤牛肉便当",
-        image: "assets/menu/bulgogi_dosilak.png",
+        image: "assets/menu/bulgogi_dosilak.webp",
         badge: "",
         serving: "1 Pax",
         spicy: 0
@@ -1271,7 +1271,7 @@ const MENU_ITEMS = [
         descKo: "매콤한 돼지불고기와 밥, 반찬이 어우러진 도시락",
         descEn: "Pork and assortment of vegetables stir-fried with Korean chili paste served in a lunchbox.",
         descZh: "包含辣炒猪肉、米饭及各式配菜 of 韩式辣炒猪肉便当",
-        image: "assets/menu/dwaeji_bulgogi_dosilak.png",
+        image: "assets/menu/dwaeji_bulgogi_dosilak.webp",
         badge: "",
         serving: "1 Pax",
         spicy: 1
@@ -1286,7 +1286,7 @@ const MENU_ITEMS = [
         descKo: "매콤한 오징어볶음과 밥, 반찬이 함께 들어간 도시락",
         descEn: "Fried squid in a sauce of Korean chili paste served in a lunchbox.",
         descZh: "包含辣炒鱿鱼、米饭及各式配菜的韩式辣炒鱿鱼便当",
-        image: "assets/menu/ojingeo_bokkeum_dosilak.png",
+        image: "assets/menu/ojingeo_bokkeum_dosilak.webp",
         badge: "",
         serving: "1 Pax",
         spicy: 1
@@ -1301,7 +1301,7 @@ const MENU_ITEMS = [
         descKo: "부드러운 수육 보쌈과 무말랭이, 밥, 반찬이 어우러진 도시락",
         descEn: "Special recipe steamed tender pork belly served in a lunchbox with side dishes.",
         descZh: "包含特制秘方清蒸软嫩白切肉、米饭及各式配菜的韩式白切肉便当",
-        image: "assets/menu/bossam_dosilak.png",
+        image: "assets/menu/bossam_dosilak.webp",
         badge: "",
         serving: "1 Pax",
         spicy: 0
@@ -1316,7 +1316,7 @@ const MENU_ITEMS = [
         descKo: "춘천식 매콤달콤한 닭갈비 볶음과 따뜻한 밥, 다오래 정통 반찬들이 함께 어우러진 점심 도시락",
         descEn: "Spicy stir-fried chicken chunks in gochujang sauce, served with rice and traditional sides.",
         descZh: "春川风味辣炒鸡肉与白米饭及精选小菜搭配의 营养便当",
-        image: "assets/menu/dakgalbi_dosilak.png",
+        image: "assets/menu/dakgalbi_dosilak.webp",
         badge: "",
         serving: "1 Pax",
         spicy: 1
@@ -1346,7 +1346,7 @@ const MENU_ITEMS = [
         descKo: "오색 나물과 볶은 소고기, 고추장 양념을 따로 담아 이동 중에도 신선하게 비벼 먹을 수 있는 비빔밥 도시락",
         descEn: "Korean mixed rice with seasoned vegetables, beef, and gochujang sauce, packed in a lunchbox.",
         descZh: "五色蔬菜和牛肉及特制辣酱搭配的韩式拌饭便当",
-        image: "assets/menu/bibimbap_dosilak.png",
+        image: "assets/menu/bibimbap_dosilak.webp",
         badge: "",
         serving: "1 Pax",
         spicy: 0

@@ -2,10 +2,6 @@
    DAORAE KOREAN BBQ - BUKIT INDAH OUTLET
    Premium Style Sheet
    ========================================================================== */
-
-/* Google Fonts Import */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
-
 /* Reset and Global Styles */
 *, *::before, *::after {
     box-sizing: border-box;
@@ -584,6 +580,7 @@ ul {
     border-radius: var(--border-radius-md);
     overflow: hidden;
     transition: var(--transition-normal);
+    will-change: transform;
     display: flex;
     flex-direction: column;
 }
@@ -1082,6 +1079,7 @@ select.input-control option {
     opacity: 0;
     transform: translateY(40px);
     transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform, opacity;
 }
 
 .reveal.active {

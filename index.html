@@ -34,7 +34,7 @@
     <meta property="og:title" content="Daorae Korean BBQ - Bukit Indah, Johor Bahru">
     <meta property="og:description" content="Authentic charcoal Korean BBQ in Bukit Indah, JB. Premium beef & pork, fresh banchan, cozy ambience. Reserve via WhatsApp!">
     <meta property="og:url" content="https://www.daorae.net/">
-    <meta property="og:image" content="https://www.daorae.net/assets/og-image.jpg">
+    <meta property="og:image" content="https://www.daorae.net/assets/og-image.webp">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="800">
     <meta property="og:image:alt" content="Premium Korean BBQ grilled on charcoal at Daorae Bukit Indah">
@@ -45,7 +45,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Daorae Korean BBQ - Bukit Indah, Johor Bahru">
     <meta name="twitter:description" content="Authentic charcoal Korean BBQ in Bukit Indah, JB. Premium beef & pork, fresh banchan, cozy ambience.">
-    <meta name="twitter:image" content="https://www.daorae.net/assets/og-image.jpg">
+    <meta name="twitter:image" content="https://www.daorae.net/assets/og-image.webp">
     <meta name="twitter:image:alt" content="Premium Korean BBQ grilled on charcoal at Daorae Bukit Indah">
 
     <!-- ===== Theme Color ===== -->
@@ -62,7 +62,7 @@
         "description": "Authentic charcoal Korean BBQ restaurant in Bukit Indah, Johor Bahru. Serving premium cuts of beef and pork with traditional banchan side dishes.",
         "url": "https://www.daorae.net",
         "logo": "https://www.daorae.net/assets/logo.png",
-        "image": "https://www.daorae.net/assets/og-image.jpg",
+        "image": "https://www.daorae.net/assets/og-image.webp",
         "telephone": "+607-207-5911",
         "email": "",
         "servesCuisine": ["Korean", "BBQ", "Korean BBQ"],
@@ -137,7 +137,7 @@
     <link rel="stylesheet" href="style.css?v=1.0.5">
     
     <!-- ===== Lucide Icons CDN ===== -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
 </head>
 <body>
 
@@ -324,6 +324,14 @@
             <!-- Dynamic Menu Grid -->
             <div class="menu-grid">
                 <!-- Javascript will inject cards here -->
+            </div>
+            
+            <!-- Load More Button -->
+            <div id="menuLoadMoreContainer" style="display: none; text-align: center; margin-top: 40px; margin-bottom: 20px;">
+                <button id="loadMoreMenuBtn" class="btn btn-gold">
+                    <i data-lucide="chevrons-down" style="width: 18px; height: 18px;"></i>
+                    <span>Load More Menu / 메뉴 더보기</span>
+                </button>
             </div>
             
             <!-- Dining Note Alert Box -->
@@ -572,8 +580,8 @@
     </footer>
 
     <!-- Supabase Integration -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="config.js?v=1.0.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="config.js?v=1.0.1" defer></script>
     <!-- Menu Detail Modal -->
     <div id="menuDetailModal" class="menu-modal">
         <div class="menu-modal-overlay"></div>
@@ -616,7 +624,7 @@
     </div>
 
     <!-- JS Scripts -->
-    <script src="menu_data.js?v=1.0.6"></script>
-    <script src="app.js?v=1.0.7"></script>
+    <script src="menu_data.js?v=1.0.6" defer></script>
+    <script src="app.js?v=1.0.7" defer></script>
 </body>
 </html>
