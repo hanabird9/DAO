@@ -8,7 +8,8 @@ ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 FILES_TO_UPDATE = [
     os.path.join(BASE_DIR, "menu_data.js"),
     os.path.join(BASE_DIR, "app.js"),
-    os.path.join(BASE_DIR, "index.html")
+    os.path.join(BASE_DIR, "index.html"),
+    os.path.join(BASE_DIR, "data", "instagram_posts.json")
 ]
 
 # File size threshold (200 KB)

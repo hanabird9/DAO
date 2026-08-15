@@ -606,8 +606,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     ? post.caption.substring(0, 77) + "..." 
                     : post.caption;
                 
+                const fallbackImg = post.image_local.endsWith('.webp')
+                    ? post.image_local.replace(/\.webp$/, '.jpg')
+                    : post.image_local.replace(/\.jpg$/, '.webp');
+                
                 item.innerHTML = `
-                    <img src="${post.image_local}" alt="Instagram Post" loading="lazy">
+                    <img src="${post.image_local}" alt="Instagram Post" loading="lazy" width="300" height="300" onerror="if(this.src!=='${fallbackImg}'){this.src='${fallbackImg}';}">
                     <div class="instagram-overlay">
                         <div class="instagram-overlay-icon">
                             <i data-lucide="instagram" style="width: 24px; height: 24px;"></i>
