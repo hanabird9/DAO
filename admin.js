@@ -11,8 +11,20 @@ document.addEventListener("DOMContentLoaded", () => {
     let supabaseClient = null;
     if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL !== "" && typeof window.supabase !== 'undefined') {
         supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        initSupabaseKeepAlive(supabaseClient);
     } else {
         console.warn("Supabase SDK is not loaded or config is empty. Falling back to local storage mode.");
+    }
+
+    function initSupabaseKeepAlive(client) {
+        if (!client) return;
+        async function ping() {
+            try {
+                await client.from('gallery').select('id', { count: 'exact', head: true }).limit(1);
+            } catch (e) {}
+        }
+        ping();
+        setInterval(ping, 15 * 60 * 1000);
     }
     
     const AUTH_KEY = "daorae_admin_auth";

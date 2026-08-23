@@ -11,9 +11,41 @@ const WHATSAPP_PHONE_NUMBER = "60126398303";
 let supabaseClient = null;
 if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL !== "" && typeof window.supabase !== 'undefined') {
     supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    initSupabaseKeepAlive(supabaseClient);
 } else {
     console.warn("Supabase SDK is not loaded or config is empty. Falling back to local storage mode.");
 }
+
+// Keep-Alive to prevent Supabase Free tier from auto-pausing due to inactivity
+function initSupabaseKeepAlive(client, intervalMinutes = 15) {
+    if (!client) return;
+    
+    async function pingDatabase() {
+        try {
+            const { error } = await client
+                .from('gallery')
+                .select('id', { count: 'exact', head: true })
+                .limit(1);
+
+            if (error && typeof SUPABASE_URL !== 'undefined') {
+                fetch(`${SUPABASE_URL}/rest/v1/`, {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    }
+                }).catch(() => {});
+            }
+            console.debug("[Supabase Keep-Alive] Ping sent at", new Date().toLocaleTimeString());
+        } catch (err) {
+            console.debug("[Supabase Keep-Alive] Ping note:", err.message);
+        }
+    }
+
+    // Ping immediately and then every intervalMinutes
+    pingDatabase();
+    setInterval(pingDatabase, intervalMinutes * 60 * 1000);
+}
+
 // Global fallback handler has been removed as all menu images are now locally downloaded and verified.
 
 

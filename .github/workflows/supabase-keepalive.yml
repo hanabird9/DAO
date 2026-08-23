@@ -1,0 +1,25 @@
+name: Supabase Keep-Alive Ping
+
+on:
+  schedule:
+    # Run twice daily at 00:00 and 12:00 UTC
+    - cron: '0 0,12 * * *'
+  workflow_dispatch:
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase Database & API
+        run: |
+          echo "Sending keep-alive ping to Supabase..."
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2b3l4Zndtc2hpd3p1b3dlcnFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM5ODUzMDEsImV4cCI6MjA5OTU2MTMwMX0.XLddrsOBBEG2z1i2-XZ9Tkdwg36IFMTn5TU8zhY4pZc" \
+            -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2b3l4Zndtc2hpd3p1b3dlcnFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM5ODUzMDEsImV4cCI6MjA5OTU2MTMwMX0.XLddrsOBBEG2z1i2-XZ9Tkdwg36IFMTn5TU8zhY4pZc" \
+            "https://wvoyxfwmshiwzuowerqj.supabase.co/rest/v1/gallery?select=id&limit=1")
+          echo "Supabase Response HTTP Code: $RESPONSE"
+          if [ "$RESPONSE" -ge 200 ] && [ "$RESPONSE" -lt 400 ]; then
+            echo "Keep-alive ping successful!"
+          else
+            echo "Ping response: $RESPONSE (Counts as active network activity on Supabase)"
+          fi
